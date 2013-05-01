@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Product Id="*" Name="Outercurve Tools"  UpgradeCode="ab72ce91-9455-4f4a-98f6-a0ffedc80236" Language="1033" Version="1.0.0.0" Manufacturer="Outercurve Foundation, CoApp Project">
+		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" Description="Outercurve Tools" InstallPrivileges="elevated"/>
+
+		<!--<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />-->
+		<MediaTemplate  EmbedCab="yes"/>
+
+    <!--<Upgrade Id="a43c25d7-b22a-411c-b780-3a83479b1d26">
+      <UpgradeVersion OnlyDetect="no" Property="PREVIOUSFOUND" Minimum="1.0.0" IncludeMinimum="yes" Maximum="1.8.94.0" IncludeMaximum="no"></UpgradeVersion>
+    </Upgrade> -->
+
+    <Directory Id="TARGETDIR" Name="SourceDir" DiskId="1">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="Outercurve" Name="Outercurve Foundation">
+          <Directory Id="INSTALLFOLDER" Name="Modules">
+            <Directory Id="OutercurveModules" Name="Outercurve">
+              
+
+            </Directory>
+          </Directory>
+        </Directory>
+      </Directory>
+    </Directory>
+
+
+    <Property Id="WixUI_InstallDir" Value="INSTALLDIR"></Property>
+
+    <Feature Id="PowershellModule" Title="CoApp Powershell Module" Level="1" ConfigurableDirectory="INSTALLFOLDER">
+      <ComponentGroupRef Id="Outercurve"></ComponentGroupRef>
+    </Feature>
+
+    <ComponentGroup Id="Outercurve" Directory="OutercurveModules">
+      <Component Id="Outercurve" Guid="FBD01CDC-605E-4E78-AC8E-C97913C31000">
+        <Environment Id="PSModuleInfo" Action="set" Part="first" Name="PSModulePath" System="yes" Value="[INSTALLFOLDER]"/>
+        <File Source="$(var.SolutionDir)OutercurveCmdlets\bin\$(var.Configuration)\Outercurve.Cmdlets.dll"/>
+        <File Source="$(var.SolutionDir)OutercurveCmdlets\bin\$(var.Configuration)\Outercurve.psd1" />
+      </Component>
+    </ComponentGroup>
+    
+  
+	</Product>
+</Wix>

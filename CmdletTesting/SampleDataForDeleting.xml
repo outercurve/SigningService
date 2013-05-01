@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sample>
+  <container name="deletable" shouldBeDeleted="true">
+    <policy name="mypolicy" minus="1"/>
+  </container>
+  <container name="not_deletable" shouldBeDeleted="false">
+    <policy name="mypolicy" minus="1"/>
+  </container>
+  <container name="deletable_something" shouldBeDeleted="true">
+    <policy name="mypolicy" minus="1"/>
+  </container>
+  <container name="deletable" shouldBeDeleted="false">
+    <policy name="somethingother_mypolicy" minus="1"/>
+  </container>
+  <container name="deletable" shouldBeDeleted="false">
+    <policy name="mypolicy" add="1"/>
+  </container>
+  <container name="deletable" shouldBeDeleted="true">
+    <policy name="another_policy" minus="1"/>
+    <policy name="mypolicy" minus="1"/>
+  </container>
+</sample>
