@@ -2,11 +2,18 @@ using System;
 using System.Management.Automation;
 using ClrPlus.Core.Extensions;
 using Outercurve.ToolsLib.Messages;
+using Outercurve.ToolsLib.Services;
 
 namespace Outercurve.Cmdlets.Commands
 {
     public abstract class ApiCmdlet : PSCmdlet
     {
+        protected readonly IDefaultCredentialService CredentialService;
+
+        protected ApiCmdlet()
+        {
+            CredentialService = new DefaultCredentialService();
+        }
 
         [Parameter]
         public string ServiceUrl { get; set; }
@@ -17,7 +24,7 @@ namespace Outercurve.Cmdlets.Commands
             
             if (String.IsNullOrWhiteSpace(ServiceUrl))
             {
-                ServiceUrl = SetDefaultRemoteServiceCmdlet.DefaultServiceUrl;
+                ServiceUrl = CredentialService.GetUri();
             }
 
             if (String.IsNullOrWhiteSpace(ServiceUrl))

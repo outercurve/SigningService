@@ -1,9 +1,12 @@
 ﻿using System.Management.Automation;
+using ClrPlus.Core.Extensions;
+using Outercurve.ToolsLib.Services;
 
 namespace Outercurve.Cmdlets.Commands
 {
     public abstract class CredentialedApiCmdlet : ApiCmdlet
     {
+
         [Parameter]
         public PSCredential Credential { get; set; }
 
@@ -14,7 +17,8 @@ namespace Outercurve.Cmdlets.Commands
 
             if (Credential == null)
             {
-                Credential = SetDefaultRemoteServiceCmdlet.DefaultCredential;
+                var cred = CredentialService.GetCredential();
+                Credential = new PSCredential(cred.UserName, cred.Password.ToSecureString());
             }
 
             if (Credential == null)

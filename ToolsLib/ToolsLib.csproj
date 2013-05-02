@@ -116,6 +116,7 @@
     <Compile Include="Messages\ProgressMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AzureFilesService.cs" />
+    <Compile Include="Services\DefaultCredentialService.cs" />
     <Compile Include="Services\Service.cs" />
     <Compile Include="Services\SigningService.cs" />
     <Compile Include="Services\UserService.cs" />
