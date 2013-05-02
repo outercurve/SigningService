@@ -14,10 +14,10 @@ namespace Outercurve.Cmdlets.Commands
     [Cmdlet(AllVerbs.Clear, "DeletableAzureFiles")]
     public class ClearDeletableAzureFilesCmdlet : PSCmdlet
     {
-        [Parameter(Mandatory = true), ValidateNotNullOrEmpty]
+        [Parameter(Mandatory = true, Position = 0), ValidateNotNullOrEmpty]
         public string AzureAccount { get; set; }
 
-        [Parameter(Mandatory = true), ValidateNotNullOrEmpty]
+        [Parameter(Mandatory = true, Position = 1), ValidateNotNullOrEmpty]
         public string AzurePassword { get; set; }
 
         protected override void ProcessRecord()
