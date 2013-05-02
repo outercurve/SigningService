@@ -192,6 +192,7 @@
     <Compile Include="Commands\RemoveRolesCmdlet.cs" />
     <Compile Include="Commands\VerifyStrongNameCmdlet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ValidateIsUrlAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Outercurve.psd1">

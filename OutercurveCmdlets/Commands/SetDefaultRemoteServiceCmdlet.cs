@@ -20,10 +20,10 @@ namespace Outercurve.Cmdlets.Commands
             _credentialsService = service;
         }
 
-        [Parameter(HelpMessage = "Remote Service URL")]
+        [Parameter(Mandatory = true, HelpMessage = "Remote Service URL"), ValidateIsUrl]
         public string ServiceUrl { get; set; }
 
-        [Parameter(HelpMessage = "Credentials to user for remote service")]
+        [Parameter(HelpMessage = "Credentials to use for remote service")]
         public PSCredential Credential { get; set; }
 
         [Parameter(HelpMessage = "Remove any defaults stored in the user registry")]
