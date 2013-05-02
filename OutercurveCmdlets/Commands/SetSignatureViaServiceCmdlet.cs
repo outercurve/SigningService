@@ -27,7 +27,7 @@ namespace Outercurve.Cmdlets.Commands
 
         protected override void ProcessRecord()
         {
-
+            base.ProcessRecord();
             try
             {
                 var sourcesToDestination = MapSourceToDestination(GetFiles());
