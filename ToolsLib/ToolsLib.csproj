@@ -32,40 +32,48 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ClrPlus.Core">
-      <HintPath>..\packages\ClrPlus.Core.1.8.0.71\lib\net40\ClrPlus.Core.dll</HintPath>
+    <Reference Include="ClrPlus.Core, Version=1.8.0.73, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\ClrPlus.Core.1.8.0.73\lib\net40\ClrPlus.Core.dll</HintPath>
     </Reference>
-    <Reference Include="ClrPlus.Platform">
-      <HintPath>..\packages\ClrPlus.Platform.1.8.0.71\lib\net40\ClrPlus.Platform.dll</HintPath>
+    <Reference Include="ClrPlus.Platform, Version=1.8.0.73, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\ClrPlus.Platform.1.8.0.73\lib\net40\ClrPlus.Platform.dll</HintPath>
     </Reference>
-    <Reference Include="ClrPlus.Powershell.Azure">
-      <HintPath>..\packages\ClrPlus.Powershell.Azure.1.8.0.71\lib\net40\ClrPlus.Powershell.Azure.dll</HintPath>
+    <Reference Include="ClrPlus.Powershell.Azure, Version=1.8.0.73, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\ClrPlus.Powershell.Azure.1.8.0.73\lib\net40\ClrPlus.Powershell.Azure.dll</HintPath>
     </Reference>
-    <Reference Include="ClrPlus.Powershell.Core">
-      <HintPath>..\packages\ClrPlus.Powershell.Core.1.8.0.71\lib\net40\ClrPlus.Powershell.Core.dll</HintPath>
+    <Reference Include="ClrPlus.Powershell.Core, Version=1.8.0.73, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\ClrPlus.Powershell.Core.1.8.0.73\lib\net40\ClrPlus.Powershell.Core.dll</HintPath>
     </Reference>
-    <Reference Include="ClrPlus.Powershell.Provider">
-      <HintPath>..\packages\ClrPlus.Powershell.Provider.1.8.0.71\lib\net40\ClrPlus.Powershell.Provider.dll</HintPath>
+    <Reference Include="ClrPlus.Powershell.Provider, Version=1.8.0.73, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\ClrPlus.Powershell.Provider.1.8.0.73\lib\net40\ClrPlus.Powershell.Provider.dll</HintPath>
     </Reference>
-    <Reference Include="ClrPlus.Scripting">
-      <HintPath>..\packages\ClrPlus.Scripting.1.8.0.71\lib\net40\ClrPlus.Scripting.dll</HintPath>
+    <Reference Include="ClrPlus.Scripting, Version=1.8.0.73, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\ClrPlus.Scripting.1.8.0.73\lib\net40\ClrPlus.Scripting.dll</HintPath>
     </Reference>
-    <Reference Include="ClrPlus.Windows.Api">
-      <HintPath>..\packages\ClrPlus.Windows.Api.1.8.0.71\lib\net40\ClrPlus.Windows.Api.dll</HintPath>
+    <Reference Include="ClrPlus.Windows.Api, Version=1.8.0.73, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\ClrPlus.Windows.Api.1.8.0.73\lib\net40\ClrPlus.Windows.Api.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CompilerServices.AsyncTargetingPack.Net4">
       <HintPath>..\packages\Microsoft.CompilerServices.AsyncTargetingPack.1.0.1\lib\net40\Microsoft.CompilerServices.AsyncTargetingPack.Net4.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Data.Edm, Version=5.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.Data.Edm, Version=5.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.Data.Edm.5.2.0\lib\net40\Microsoft.Data.Edm.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Data.Edm.5.4.0\lib\net40\Microsoft.Data.Edm.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Data.OData, Version=5.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.Data.OData, Version=5.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.Data.OData.5.2.0\lib\net40\Microsoft.Data.OData.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Data.OData.5.4.0\lib\net40\Microsoft.Data.OData.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.WindowsAzure.Configuration">
-      <HintPath>..\packages\Microsoft.WindowsAzure.ConfigurationManager.1.8.0.0\lib\net35-full\Microsoft.WindowsAzure.Configuration.dll</HintPath>
+    <Reference Include="Microsoft.WindowsAzure.Configuration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.WindowsAzure.ConfigurationManager.2.0.0.0\lib\net40\Microsoft.WindowsAzure.Configuration.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.WindowsAzure.Storage">
       <HintPath>..\packages\WindowsAzure.Storage.2.0.5.1\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
@@ -98,9 +106,9 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Services.Client" />
     <Reference Include="System.Management.Automation, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="System.Spatial, Version=5.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="System.Spatial, Version=5.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\System.Spatial.5.2.0\lib\net40\System.Spatial.dll</HintPath>
+      <HintPath>..\packages\System.Spatial.5.4.0\lib\net40\System.Spatial.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />

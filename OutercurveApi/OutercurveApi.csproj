@@ -42,37 +42,37 @@
     <ExcludeGeneratedDebugSymbol>false</ExcludeGeneratedDebugSymbol>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ClrPlus.Core, Version=1.8.0.71, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="ClrPlus.Core, Version=1.8.0.73, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\ClrPlus.Core.1.8.0.71\lib\net40\ClrPlus.Core.dll</HintPath>
+      <HintPath>..\packages\ClrPlus.Core.1.8.0.73\lib\net40\ClrPlus.Core.dll</HintPath>
     </Reference>
-    <Reference Include="ClrPlus.Platform, Version=1.8.0.71, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="ClrPlus.Platform, Version=1.8.0.73, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\ClrPlus.Platform.1.8.0.71\lib\net40\ClrPlus.Platform.dll</HintPath>
+      <HintPath>..\packages\ClrPlus.Platform.1.8.0.73\lib\net40\ClrPlus.Platform.dll</HintPath>
     </Reference>
-    <Reference Include="ClrPlus.Powershell.Azure, Version=1.8.0.71, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="ClrPlus.Powershell.Azure, Version=1.8.0.73, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\ClrPlus.Powershell.Azure.1.8.0.71\lib\net40\ClrPlus.Powershell.Azure.dll</HintPath>
+      <HintPath>..\packages\ClrPlus.Powershell.Azure.1.8.0.73\lib\net40\ClrPlus.Powershell.Azure.dll</HintPath>
     </Reference>
-    <Reference Include="ClrPlus.Powershell.Core, Version=1.8.0.71, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="ClrPlus.Powershell.Core, Version=1.8.0.73, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\ClrPlus.Powershell.Core.1.8.0.71\lib\net40\ClrPlus.Powershell.Core.dll</HintPath>
+      <HintPath>..\packages\ClrPlus.Powershell.Core.1.8.0.73\lib\net40\ClrPlus.Powershell.Core.dll</HintPath>
     </Reference>
-    <Reference Include="ClrPlus.Powershell.Provider, Version=1.8.0.71, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="ClrPlus.Powershell.Provider, Version=1.8.0.73, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\ClrPlus.Powershell.Provider.1.8.0.71\lib\net40\ClrPlus.Powershell.Provider.dll</HintPath>
+      <HintPath>..\packages\ClrPlus.Powershell.Provider.1.8.0.73\lib\net40\ClrPlus.Powershell.Provider.dll</HintPath>
     </Reference>
-    <Reference Include="ClrPlus.Scripting, Version=1.8.0.71, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="ClrPlus.Scripting, Version=1.8.0.73, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\ClrPlus.Scripting.1.8.0.71\lib\net40\ClrPlus.Scripting.dll</HintPath>
+      <HintPath>..\packages\ClrPlus.Scripting.1.8.0.73\lib\net40\ClrPlus.Scripting.dll</HintPath>
     </Reference>
-    <Reference Include="ClrPlus.Windows.Api, Version=1.8.0.71, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="ClrPlus.Windows.Api, Version=1.8.0.73, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\ClrPlus.Windows.Api.1.8.0.71\lib\net40\ClrPlus.Windows.Api.dll</HintPath>
+      <HintPath>..\packages\ClrPlus.Windows.Api.1.8.0.73\lib\net40\ClrPlus.Windows.Api.dll</HintPath>
     </Reference>
-    <Reference Include="ClrPlus.Windows.PeBinary, Version=1.8.0.71, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="ClrPlus.Windows.PeBinary, Version=1.8.0.73, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\ClrPlus.Windows.PeBinary.1.8.0.71\lib\net40\ClrPlus.Windows.PeBinary.dll</HintPath>
+      <HintPath>..\packages\ClrPlus.Windows.PeBinary.1.8.0.73\lib\net40\ClrPlus.Windows.PeBinary.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Cci.Analysis.ControlAndDataFlowGraph">
       <HintPath>..\packages\CCI.1.0.13\lib\net40\Microsoft.Cci.Analysis.ControlAndDataFlowGraph.dll</HintPath>
@@ -144,8 +144,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.Data.OData.5.4.0\lib\net40\Microsoft.Data.OData.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.WindowsAzure.Configuration">
-      <HintPath>..\packages\Microsoft.WindowsAzure.ConfigurationManager.1.8.0.0\lib\net35-full\Microsoft.WindowsAzure.Configuration.dll</HintPath>
+    <Reference Include="Microsoft.WindowsAzure.Configuration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.WindowsAzure.ConfigurationManager.2.0.0.0\lib\net40\Microsoft.WindowsAzure.Configuration.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.WindowsAzure.Storage">
       <HintPath>..\packages\WindowsAzure.Storage.2.0.5.1\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
