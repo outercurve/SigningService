@@ -27,6 +27,8 @@ namespace Outercurve.Api
             container.RegisterAutoWired<AzureClient>();
             container.RegisterAutoWired<CertService>();
             container.RegisterAutoWired<CustomBasicAuthProvider>();
+            container.Register(LogManager.GetLogger(GetType()));
+            container.RegisterAutoWired<LoggingService>();
             Plugins.Add(new AuthFeature(() => new AuthUserSession(), new IAuthProvider[] { container.Resolve<CustomBasicAuthProvider>() }) { HtmlRedirect = null, IncludeAssignRoleServices = false});
          
 
