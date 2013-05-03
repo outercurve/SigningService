@@ -8,7 +8,7 @@ namespace Outercurve.Api
 {
     public class FsService
     {
-        private AppSettings _settings;
+        private readonly AppSettings _settings;
         public FsService(AppSettings settings)
         {
             _settings = settings;
