@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using ClrPlus.Windows.PeBinary.Utility;
 using ServiceStack.Logging;
@@ -27,12 +28,10 @@ namespace Outercurve.Api.Signers
         {
             try
             {
-
-
-                LogManager.GetLogger(GetType()).DebugFormat("path is {0}", path);
+                //LogManager.GetLogger(GetType()).DebugFormat("path is {0}", path);
                 var certRef = new CertificateReference(Certificate);
                 var r = BinaryLoad(path);
-                LogManager.GetLogger(GetType()).DebugFormat("filename of Binary is {0}", r.Filename);
+                //LogManager.GetLogger(GetType()).DebugFormat("filename of Binary is {0}", r.Filename);
                 r.SigningCertificate = certRef;
                 if (strongName)
                     r.StrongNameKeyCertificate = certRef;
@@ -42,17 +41,9 @@ namespace Outercurve.Api.Signers
             
             catch (AggregateException ae)
             {
-                foreach (var e in ae.Flatten().InnerExceptions)
+                if (ae.Flatten().InnerExceptions.OfType<DigitalSignFailure>().Any(dsf => dsf.Win32Code == 2148204547))
                 {
-                    var dsf = e as DigitalSignFailure;
-                    if (dsf != null)
-                    {
-                        if (dsf.Win32Code == 2148204547)
-                        {
-                            // it's what we have is an invalid file, nothing more
-                            throw new InvalidFileToSignException();
-                        }
-                    }
+                    throw new InvalidFileToSignException();
                 }
                 throw;
             }

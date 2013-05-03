@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO.Packaging;
+using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 
 namespace Outercurve.Api.Signers
@@ -17,16 +18,19 @@ namespace Outercurve.Api.Signers
         /// 
         /// </summary>
         /// <param name="path"></param>
+        /// <param name="overrideCurrentSignature"></param>
         /// <from>http://msdn.microsoft.com/en-us/library/system.io.packaging.packagedigitalsignaturemanager.sign(v=vs.100).aspx</from>
         public void Sign(string path, bool overrideCurrentSignature) {
             
             var package = Package.Open(path);
 
 
-            var signatureManager = new PackageDigitalSignatureManager(package);
-            signatureManager.CertificateOption = CertificateEmbeddingOption.InSignaturePart;
+            var signatureManager = new PackageDigitalSignatureManager(package)
+                {
+                    CertificateOption = CertificateEmbeddingOption.InSignaturePart
+                };
 
-             if (signatureManager.IsSigned)
+            if (signatureManager.IsSigned)
             {
                 if (overrideCurrentSignature)
                 {
@@ -40,18 +44,11 @@ namespace Outercurve.Api.Signers
                 }
             }
 
-            var toSign = new List<Uri>();
-            foreach (PackagePart packagePart in package.GetParts())
-            {
-                toSign.Add(packagePart.Uri);
-            }
+            var toSign = package.GetParts().Select(packagePart => packagePart.Uri).ToList();
 
             toSign.Add(PackUriHelper.GetRelationshipPartUri(signatureManager.SignatureOrigin));
             toSign.Add(signatureManager.SignatureOrigin);
             toSign.Add(PackUriHelper.GetRelationshipPartUri(new Uri("/", UriKind.RelativeOrAbsolute)));
-            
-           
-            
             
             signatureManager.Sign(toSign, Certificate);
             package.Close();

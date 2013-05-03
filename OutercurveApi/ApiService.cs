@@ -21,20 +21,21 @@ namespace Outercurve.Api
         private readonly AppSettings _settings;
         private readonly CustomBasicAuthProvider _authProvider;
         private readonly List<String> Errors = new List<string>();
-        private readonly ILog _log;
+        private readonly LoggingService _log;
 
-        public ApiService(AzureClient azure, FsService fs, CertService certs, AppSettings settings, CustomBasicAuthProvider authProvider)
+        public ApiService(AzureClient azure, FsService fs, CertService certs, AppSettings settings, CustomBasicAuthProvider authProvider, LoggingService log)
         {
             _azure = azure.GetRoot();
             _fs = fs;
             _certs = certs;
             _settings = settings;
             _authProvider = authProvider;
-            _log = LogManager.GetLogger(GetType());
+            _log = log;
         }
 
         public GetUploadLocationResponse Post(GetUploadLocationRequest request)
         {
+            _log.StartLog(request);
             var contName = "deletable" + Guid.NewGuid().ToString("D").ToLowerInvariant();
 
             var container = _azure.CreateContainerIfDoesNotExist(contName);
@@ -58,7 +59,7 @@ namespace Outercurve.Api
 
         public SetCodeSignatureResponse Post(SetCodeSignatureRequest request)
         {
-
+            _log.StartLog(request);
            
             var tempPath = CopyFileToTemp(request.Container, request.Path);
             var cert = _certs.Get(_settings.GetString("CertificatePath"));
@@ -87,6 +88,7 @@ namespace Outercurve.Api
 
         public BaseResponse Post(SetRolesRequest request)
         {
+            _log.StartLog(request);
             try
             {
                 _authProvider.SetRoles(request.UserName, request.Roles.ToArray());
@@ -103,6 +105,7 @@ namespace Outercurve.Api
 
         public BaseResponse Post(UnsetRolesRequest request)
         {
+            _log.StartLog(request);
             try
             {
                 _authProvider.UnsetRoles(request.UserName, request.Roles.ToArray());
@@ -118,6 +121,7 @@ namespace Outercurve.Api
 
         public CreateUserResponse Post(ResetPasswordAsAdminRequest request)
         {
+            _log.StartLog(request);
             try
             {
                 var pass = _authProvider.ResetPasswordAsAdmin(request.UserName);
@@ -132,6 +136,7 @@ namespace Outercurve.Api
 
         public BaseResponse Post(RemoveUserRequest request)
         {
+            _log.StartLog(request);
             try
             {
                 _authProvider.RemoveUser(request.UserName);
@@ -146,6 +151,7 @@ namespace Outercurve.Api
 
         public BaseResponse Post(SetPasswordRequest request)
         {
+            _log.StartLog(request);
             try
             {
                 _authProvider.SetPassword(this.GetSession().UserAuthName, request.NewPassword);
@@ -160,7 +166,7 @@ namespace Outercurve.Api
 
         public CreateUserResponse Post(CreateUserRequest request)
         {
-            
+            _log.StartLog(request);
             try
             {
                 if (String.IsNullOrWhiteSpace(request.Password))
@@ -192,11 +198,12 @@ namespace Outercurve.Api
             }
         }
 
-        public BaseResponse Post(InitializeRequest req)
+        public BaseResponse Post(InitializeRequest request)
         {
+            _log.StartLog(request);
             try
             {
-                _authProvider.Initialize(req.UserName, req.Password);
+                _authProvider.Initialize(request.UserName, request.Password);
                 return new BaseResponse();
             }
             catch (Exception e)
@@ -209,9 +216,9 @@ namespace Outercurve.Api
         private void AttemptToSignAuthenticode(string path, bool strongName, X509Certificate2 certificate)
         {
            
-            _log.Debug(path);
-            _log.Debug(strongName);
-            _log.Debug(certificate);
+            //_log.Debug(path);
+            //_log.Debug(strongName);
+            //_log.Debug(certificate);
             
             var authenticode = new AuthenticodeSigner(certificate);
             AttemptToSign(() => authenticode.Sign(path, strongName));
@@ -259,7 +266,7 @@ namespace Outercurve.Api
                return null;
            
            var temp = _fs.CreateTempPath(file.Replace('/', '_'));
-           _log.DebugFormat("In ApiService, to CopyTo temp path of {0}", temp);
+          
            using (var blobStream = blob.OpenRead())
            {
                using (var tempFile = _fs.OpenWrite(temp))
