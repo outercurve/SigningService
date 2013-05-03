@@ -8,7 +8,7 @@ namespace Outercurve.Api
     public class LoggingService
     {
         private readonly ILog _log;
-        private object _lock = new object();
+        private readonly object _lock = new object();
         public LoggingService(ILog log)
         {
             _log = log;
@@ -67,13 +67,21 @@ namespace Outercurve.Api
                           [CallerFilePath] string sourceFilePath = "",
                           [CallerLineNumber] int sourceLineNumber = 0)
         {
-
+            lock (_lock)
+            {
+                _log.ErrorFormat("{0}-{1}", CreateLocationInfo(memberName, sourceFilePath, sourceLineNumber), message);
+            }
         }
 
         public void Error(object message, Exception exception, [CallerMemberName] string memberName = "",
                           [CallerFilePath] string sourceFilePath = "",
                           [CallerLineNumber] int sourceLineNumber = 0)
         {
+            lock (_lock)
+            {
+                _log.ErrorFormat("{0}-{1}-{2}-{3}", CreateLocationInfo(memberName, sourceFilePath, sourceLineNumber),
+                                 message, exception.Message, exception.StackTrace);
+            }
         }
 
 
@@ -81,12 +89,21 @@ namespace Outercurve.Api
                           [CallerFilePath] string sourceFilePath = "",
                           [CallerLineNumber] int sourceLineNumber = 0)
         {
+            lock (_lock)
+            {
+                _log.FatalFormat("{0}-{1}", CreateLocationInfo(memberName, sourceFilePath, sourceLineNumber), message);
+            }
         }
 
         public void Fatal(object message, Exception exception, [CallerMemberName] string memberName = "",
                           [CallerFilePath] string sourceFilePath = "",
                           [CallerLineNumber] int sourceLineNumber = 0)
         {
+            lock (_lock)
+            {
+                _log.FatalFormat("{0}-{1}-{2}-{3}", CreateLocationInfo(memberName, sourceFilePath, sourceLineNumber),
+                                 message, exception.Message, exception.StackTrace);
+            }
         }
 
 
@@ -94,12 +111,21 @@ namespace Outercurve.Api
                          [CallerFilePath] string sourceFilePath = "",
                          [CallerLineNumber] int sourceLineNumber = 0)
         {
+            lock (_lock)
+            {
+                _log.InfoFormat("{0}-{1}", CreateLocationInfo(memberName, sourceFilePath, sourceLineNumber), message);
+            }
         }
 
         public void Info(object message, Exception exception, [CallerMemberName] string memberName = "",
                          [CallerFilePath] string sourceFilePath = "",
                          [CallerLineNumber] int sourceLineNumber = 0)
         {
+            lock (_lock)
+            {
+                _log.InfoFormat("{0}-{1}-{2}-{3}", CreateLocationInfo(memberName, sourceFilePath, sourceLineNumber),
+                                 message, exception.Message, exception.StackTrace);
+            }
         }
 
 
@@ -107,12 +133,21 @@ namespace Outercurve.Api
                          [CallerFilePath] string sourceFilePath = "",
                          [CallerLineNumber] int sourceLineNumber = 0)
         {
+            lock (_lock)
+            {
+                _log.WarnFormat("{0}-{1}", CreateLocationInfo(memberName, sourceFilePath, sourceLineNumber), message);
+            }
         }
 
         public void Warn(object message, Exception exception, [CallerMemberName] string memberName = "",
                          [CallerFilePath] string sourceFilePath = "",
                          [CallerLineNumber] int sourceLineNumber = 0)
         {
+            lock (_lock)
+            {
+                _log.WarnFormat("{0}-{1}-{2}-{3}", CreateLocationInfo(memberName, sourceFilePath, sourceLineNumber),
+                                 message, exception.Message, exception.StackTrace);
+            }
         }
     }
 }
