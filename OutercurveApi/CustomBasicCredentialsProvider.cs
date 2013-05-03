@@ -22,17 +22,20 @@ namespace Outercurve.Api
             private readonly object _lock = new object();
             private readonly AppHost _hostBase;
             private readonly AppSettings _settings;
-            public CustomBasicAuthProvider(AppHost hostBase, AppSettings settings)
+            private readonly LoggingService _log;
+            public CustomBasicAuthProvider(AppHost hostBase, AppSettings settings, LoggingService log)
             {
                 _hostBase = hostBase;
                 _settings = settings;
+                _log = log;
             }
 
             public override bool TryAuthenticate(IServiceBase authService, string userName, string password)
             {
-
+                
                 if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password))
                 {
+                    _log.StartAuthenticate(userName, password, false);
                     return false;
                 }
                 lock (_lock)
@@ -52,17 +55,18 @@ namespace Outercurve.Api
                         var pwd = HashPassword(password);
                         if (pwd == storedPassword)
                         {
+                            _log.StartAuthenticate(userName, password, true);
                             return true;
                         }
                     }
 
-                    if (storedPassword == password)
+                 /*   if (storedPassword == password)
                     {
                         // matched against password unsalted.
                         // user should change password asap.
                         return true;
-                    }
-
+                    }*/
+                    _log.StartAuthenticate(userName, password, false);
                     return false;
                 }
 
@@ -88,10 +92,10 @@ namespace Outercurve.Api
 
                     // check to see if user has an unsalted password
                     var storedPassword = user["password"].Value;
-                    if (storedPassword.Length != 32)
+                  /*  if (storedPassword.Length != 32)
                     {
                         session.Roles.Add("password_must_be_changed");
-                    }
+                    }*/
 
                     if (user.HasProperty("roles"))
                     {

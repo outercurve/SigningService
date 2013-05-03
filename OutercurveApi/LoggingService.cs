@@ -34,7 +34,18 @@ namespace Outercurve.Api
 
         }
 
-        private string CreateLocationInfo(string memberName, string sourceFilePath, int sourceLineNumber)
+
+        public void StartAuthenticate(string userName, string password, bool succeeded, [CallerMemberName] string memberName = "",
+                                      [CallerFilePath] string sourceFilePath = "",
+                                      [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            lock (_lock)
+            {
+                _log.InfoFormat("AUTHENTICATE,{0},{1},{2},{3},{4},{5}", userName, password, succeeded, memberName, sourceFilePath, sourceLineNumber);
+            }
+        }
+
+        private static string CreateLocationInfo(string memberName, string sourceFilePath, int sourceLineNumber)
         {
             return "{0},{1}:{2}".format(memberName, sourceFilePath, sourceLineNumber);
         }
