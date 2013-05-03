@@ -32,37 +32,37 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ClrPlus.Core, Version=1.8.0.73, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="ClrPlus.Core, Version=1.8.0.74, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\ClrPlus.Core.1.8.0.73\lib\net40\ClrPlus.Core.dll</HintPath>
+      <HintPath>..\packages\ClrPlus.Core.1.8.0.74\lib\net40\ClrPlus.Core.dll</HintPath>
     </Reference>
-    <Reference Include="ClrPlus.Platform, Version=1.8.0.73, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="ClrPlus.Platform, Version=1.8.0.74, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\ClrPlus.Platform.1.8.0.73\lib\net40\ClrPlus.Platform.dll</HintPath>
+      <HintPath>..\packages\ClrPlus.Platform.1.8.0.74\lib\net40\ClrPlus.Platform.dll</HintPath>
     </Reference>
-    <Reference Include="ClrPlus.Powershell.Core, Version=1.8.0.73, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="ClrPlus.Powershell.Core, Version=1.8.0.74, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\ClrPlus.Powershell.Core.1.8.0.73\lib\net40\ClrPlus.Powershell.Core.dll</HintPath>
+      <HintPath>..\packages\ClrPlus.Powershell.Core.1.8.0.74\lib\net40\ClrPlus.Powershell.Core.dll</HintPath>
     </Reference>
-    <Reference Include="ClrPlus.Powershell.Provider, Version=1.8.0.73, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="ClrPlus.Powershell.Provider, Version=1.8.0.74, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\ClrPlus.Powershell.Provider.1.8.0.73\lib\net40\ClrPlus.Powershell.Provider.dll</HintPath>
+      <HintPath>..\packages\ClrPlus.Powershell.Provider.1.8.0.74\lib\net40\ClrPlus.Powershell.Provider.dll</HintPath>
     </Reference>
-    <Reference Include="ClrPlus.Powershell.Rest, Version=1.8.0.73, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="ClrPlus.Powershell.Rest, Version=1.8.0.74, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\ClrPlus.Powershell.Rest.1.8.0.73\lib\net40\ClrPlus.Powershell.Rest.dll</HintPath>
+      <HintPath>..\packages\ClrPlus.Powershell.Rest.1.8.0.74\lib\net40\ClrPlus.Powershell.Rest.dll</HintPath>
     </Reference>
-    <Reference Include="ClrPlus.Scripting, Version=1.8.0.73, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="ClrPlus.Scripting, Version=1.8.0.74, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\ClrPlus.Scripting.1.8.0.73\lib\net40\ClrPlus.Scripting.dll</HintPath>
+      <HintPath>..\packages\ClrPlus.Scripting.1.8.0.74\lib\net40\ClrPlus.Scripting.dll</HintPath>
     </Reference>
-    <Reference Include="ClrPlus.Windows.Api, Version=1.8.0.73, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="ClrPlus.Windows.Api, Version=1.8.0.74, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\ClrPlus.Windows.Api.1.8.0.73\lib\net40\ClrPlus.Windows.Api.dll</HintPath>
+      <HintPath>..\packages\ClrPlus.Windows.Api.1.8.0.74\lib\net40\ClrPlus.Windows.Api.dll</HintPath>
     </Reference>
-    <Reference Include="ClrPlus.Windows.PeBinary, Version=1.8.0.73, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="ClrPlus.Windows.PeBinary, Version=1.8.0.74, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\ClrPlus.Windows.PeBinary.1.8.0.73\lib\net40\ClrPlus.Windows.PeBinary.dll</HintPath>
+      <HintPath>..\packages\ClrPlus.Windows.PeBinary.1.8.0.74\lib\net40\ClrPlus.Windows.PeBinary.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Cci.Analysis.ControlAndDataFlowGraph">
       <HintPath>..\packages\CCI.1.0.13\lib\net40\Microsoft.Cci.Analysis.ControlAndDataFlowGraph.dll</HintPath>

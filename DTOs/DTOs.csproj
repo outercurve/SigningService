@@ -32,9 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ClrPlus.Core, Version=1.8.0.73, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="ClrPlus.Core, Version=1.8.0.74, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\ClrPlus.Core.1.8.0.73\lib\net40\ClrPlus.Core.dll</HintPath>
+      <HintPath>..\packages\ClrPlus.Core.1.8.0.74\lib\net40\ClrPlus.Core.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CompilerServices.AsyncTargetingPack.Net4, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
