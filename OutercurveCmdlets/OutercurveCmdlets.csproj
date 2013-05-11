@@ -215,13 +215,11 @@
   <ItemGroup />
   <PropertyGroup>
     <PostBuildEvent>
-      cd $(TargetDir)
-
-      $(SolutionDir)\tools\il-repack.exe /out:Outercurve.Cmdlets.dll Outercurve.DTOs.dll Outercurve.ToolsLib.dll Outercurve.Cmdlets.dll ClrPlus.Core.dll ClrPlus.Platform.dll ClrPlus.Powershell.Core.dll ClrPlus.Powershell.Provider.dll ClrPlus.Scripting.dll ClrPlus.Windows.Api.dll ClrPlus.Windows.PeBinary.dll Microsoft.Cci.Analysis.ControlAndDataFlowGraph.dll Microsoft.Cci.AstsProjectedAsCodeModel.dll Microsoft.Cci.CodeModel.dll Microsoft.Cci.CodeModelToIL.dll Microsoft.Cci.ContractExtractor.dll Microsoft.Cci.CSharpSourceEmitter.dll Microsoft.Cci.ILGenerator.dll Microsoft.Cci.MetadataHelper.dll Microsoft.Cci.MetadataModel.dll Microsoft.Cci.MutableCodeModel.dll Microsoft.Cci.MutableMetadataModel.dll Microsoft.Cci.NewILToCodeModel.dll Microsoft.Cci.PdbReader.dll Microsoft.Cci.PdbWriter.dll Microsoft.Cci.PeReader.dll Microsoft.Cci.PeWriter.dll Microsoft.Cci.ReflectionEmitter.dll Microsoft.Cci.SourceEmitter.dll Microsoft.Cci.SourceModel.dll Microsoft.CompilerServices.AsyncTargetingPack.Net4.dll Microsoft.WindowsAzure.Configuration.dll Microsoft.WindowsAzure.Storage.dll ServiceStack.Common.dll ServiceStack.dll ServiceStack.Interfaces.dll ServiceStack.ServiceInterface.dll ServiceStack.Text.dll  ServiceStack.OrmLite.dll Microsoft.Data.OData.dll Microsoft.Data.Edm.dll
-</PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+  <Import Project="..\packages\ILRepackTask.1.0.2\build\net40\ILRepackTask.targets" Condition="Exists('..\packages\ILRepackTask.1.0.2\build\net40\ILRepackTask.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
