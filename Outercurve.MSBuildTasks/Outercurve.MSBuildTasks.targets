@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">$(MSBuildProjectDirectory)\..\</SolutionDir>
+    <SignOutputAssembly Condition="'$(SignOutputAssembly)' == ''">$(TargetPath)</SignOutputAssembly>
+    <SignInputAssembly Condition="'$(SignInputAssembly)' == ''">$(TargetPath)</SignInputAssembly>
+    <SignOutputDir Condition="'$(SignOutputDir)' == ''">$(TargetDir)</SignOutputDir>
+    <SignConfig Condition="'$(SignConfig)' == ''">Release</SignConfig>
+    <SignStrongName Condition="'$(SignStrongName)' == ''">true</SignStrongName>
+    <BuildDependsOn Condition="'$(Configuration)' == '$(SignConfig)'">
+      $(BuildDependsOn);
+      SetCodeSignatureViaService
+    </BuildDependsOn>
+  </PropertyGroup>
+  <UsingTask AssemblyFile="Outercurve.MSBuildTask.dll" TaskName="SetSignature"/>
+  <Target Name="SetCodeSignatureViaService" AfterTargets="AfterBuild;RepackILFiles">
+    <SetSignature InputFiles="$(SignInputAssembly)" OutputDir="$(OutputDir)" StrongName="$(SignStrongName)"/>
+  </Target>
+</Project>
