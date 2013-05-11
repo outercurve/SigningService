@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Abstractions;
 using System.Linq;
 using System.Management.Automation;
 using System.Management.Automation.Runspaces;
@@ -48,18 +49,18 @@ namespace Outercurve.Cmdlets.Commands
             }
         }
 
-        private IEnumerable<SourceToDestinationMap<FileInfo>> MapSourceToDestination(IEnumerable<FileInfo> inputs)
+        private IEnumerable<SourceToDestinationMap<FileInfoBase>> MapSourceToDestination(IEnumerable<FileInfoBase> inputs)
         {
             var destination = ResolveDestination();
             if (destination is FileInfo)
             {
-                var fileInfos = inputs as FileInfo[] ?? inputs.ToArray();
+                var fileInfos = inputs as FileInfoBase[] ?? inputs.ToArray();
                 if (fileInfos.Count() > 1)
                   {
                       ThrowTerminatingError(new ErrorRecord(new DirectoryNotFoundException(), "0", ErrorCategory.InvalidArgument, null));
                   }
 
-                yield return new SourceToDestinationMap<FileInfo> {Source = fileInfos.First(), Destination = destination as FileInfo};
+                yield return new SourceToDestinationMap<FileInfoBase> {Source = fileInfos.First(), Destination = destination as FileInfo};
                 yield break;
             }
             
@@ -67,7 +68,7 @@ namespace Outercurve.Cmdlets.Commands
            
             foreach (var i in inputs)
             {
-                yield return new SourceToDestinationMap<FileInfo> { Source = i, Destination = new FileInfo(Path.Combine(destination.FullName, i.Name)) };
+                yield return new SourceToDestinationMap<FileInfoBase> { Source = i, Destination = new FileInfo(Path.Combine(destination.FullName, i.Name)) };
             }
            
         }
@@ -125,12 +126,12 @@ namespace Outercurve.Cmdlets.Commands
 
           
 
-        private IEnumerable<FileInfo> GetFiles()
+        private IEnumerable<FileInfoBase> GetFiles()
         {
             using (var ps = Runspace.DefaultRunspace.Dynamic())
             {
-                dynamic _ps = ps;
-                return FilePath.SelectMany<string,FileInfo>(f => Enumerable.OfType<FileInfo>(_ps.GetItem(f)));
+                var _ps = ps;
+                return FilePath.SelectMany<string,FileInfo>(f => Enumerable.OfType<FileInfo>(_ps.GetItem(f))).Select(f => new FileInfoWrapper(f));
             }
         }
 

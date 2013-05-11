@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Abstractions;
 using System.Linq;
 using System.Threading;
 using ClrPlus.Core.Extensions;
@@ -20,10 +21,10 @@ namespace Outercurve.ToolsLib.Services
        
 
 
-        public SigningService(string username, string password, IEnumerable<SourceToDestinationMap<FileInfo>> sourcesToDestinations, string serviceUrl, Action<Message> messageHandler = null, Action<ProgressMessage> progressHandler = null)
+        public SigningService(string username, string password, IEnumerable<SourceToDestinationMap<FileInfoBase>> sourcesToDestinations, string serviceUrl, Action<Message> messageHandler = null, Action<ProgressMessage> progressHandler = null)
             : base(username, password, serviceUrl,messageHandler, progressHandler)
         {
-            IEnumerable<SourceToDestinationMap<FileInfo>> sourceToDestinationMaps = sourcesToDestinations as SourceToDestinationMap<FileInfo>[] ?? sourcesToDestinations.ToArray();
+            IEnumerable<SourceToDestinationMap<FileInfoBase>> sourceToDestinationMaps = sourcesToDestinations as SourceToDestinationMap<FileInfoBase>[] ?? sourcesToDestinations.ToArray();
             if (sourceToDestinationMaps.IsNullOrEmpty())
             {
                 throw new ArgumentException("", "sourcesToDestinations");
