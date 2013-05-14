@@ -9,8 +9,8 @@ namespace Outercurve.ToolsLib.IoItem
     {
         string FullName { get; }
         string Name { get; }
-        ProgressStream OpenRead();
-        ProgressStream OpenWrite();
+        Stream OpenRead();
+        Stream OpenWrite();
     }
 
     static class IoItemFactory

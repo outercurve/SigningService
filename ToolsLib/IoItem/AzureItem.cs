@@ -1,3 +1,4 @@
+using System.IO;
 using ClrPlus.Powershell.Provider.Utility;
 using Outercurve.DTOs.Services.Azure;
 
@@ -12,14 +13,14 @@ namespace Outercurve.ToolsLib.IoItem
         }
 
         public string FullName { get { return _blob.Uri; } }
-        public ProgressStream OpenRead()
+        public Stream OpenRead()
         {
-            return new ProgressStream(_blob.OpenRead());
+            return _blob.OpenRead();
         }
 
-        public ProgressStream OpenWrite()
+        public Stream OpenWrite()
         {
-           return new ProgressStream(_blob.OpenWrite());
+           return _blob.OpenWrite();
         }
 
 

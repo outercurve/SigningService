@@ -82,9 +82,12 @@ namespace Outercurve.ToolsLib.Services
                 {
                 using (var to = destination.OpenWrite())
                 {
+                    
                 
+
+                    from.CopyTo(to);
                     var inputLength = from.Length;
-                    to.BytesWritten += (sender, args) => SendProgress (new ProgressMessage
+                   /* to.BytesWritten += (sender, args) => SendProgress (new ProgressMessage
                                                              {
                                                                  Activity =  "Copy",
                                                                  ActivityId = 1,
@@ -121,7 +124,16 @@ namespace Outercurve.ToolsLib.Services
                                     Contents = "Finished Copy",
                                     MessageType = MessageType.Info
                                 });
-                 
+                        }
+                        );
+
+                    */
+                    /*
+                    t.RunSynchronously();
+
+
+                    t.Wait();*/
+
                 }
             }
         }
@@ -161,6 +173,7 @@ namespace Outercurve.ToolsLib.Services
                 MessageType = MessageType.Info
             });
 
+            
             CopyTo(blob, file.Destination);
         }
     }

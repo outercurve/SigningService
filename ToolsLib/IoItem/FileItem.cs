@@ -18,14 +18,14 @@ namespace Outercurve.ToolsLib.IoItem
             get { return _file.FullName; }
         }
 
-        public ProgressStream OpenRead()
+        public Stream OpenRead()
         {
-           return new ProgressStream(_file.OpenRead());
+            return _file.OpenRead();
         }
 
-        public ProgressStream OpenWrite()
+        public Stream OpenWrite()
         {
-            return new ProgressStream(_file.OpenWrite());
+            return  _file.Open(FileMode.Create, FileAccess.Write);
         }
 
 
