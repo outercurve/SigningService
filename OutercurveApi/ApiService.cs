@@ -23,6 +23,7 @@ namespace Outercurve.Api
         private readonly CustomBasicAuthProvider _authProvider;
         private readonly List<String> Errors = new List<string>();
         private readonly LoggingService _log;
+        public const int HOURS_FILE_SHOULD_BE_ACCESSIBLE = 12;
 
         public ApiService(AzureClient azure, FsService fs, CertService certs, AppSettings settings, CustomBasicAuthProvider authProvider, LoggingService log)
         {
@@ -47,7 +48,7 @@ namespace Outercurve.Api
 
                 var blobPolicy = new SharedAccessBlobPolicy {
                                                                 Permissions = SharedAccessBlobPermissions.Read | SharedAccessBlobPermissions.Write | SharedAccessBlobPermissions.List,
-                                                                SharedAccessExpiryTime = DateTimeOffset.Now.AddHours(1)
+                                                                SharedAccessExpiryTime = DateTimeOffset.Now.AddHours(HOURS_FILE_SHOULD_BE_ACCESSIBLE)
                                                             
                                                             };
 
