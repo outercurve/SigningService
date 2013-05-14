@@ -13,17 +13,18 @@ namespace Outercurve.DTOs.Services.Azure
         IAzureContainer CreateContainerIfDoesNotExist(string containerName);
         string Account { get; }
         IEnumerable<IAzureContainer> Containers { get; }
+        string SasToken { get; }
         IAzureContainer GetContainer(string name);
     }
 
     public class AzureService : IAzureService
     {
-       
         private readonly CloudBlobClient _client;
         private string _account;
         private AzureService(CloudBlobClient client)
         {
             _client = client;
+            
         }
 
         public AzureService(string account, string azureKey)
@@ -58,6 +59,9 @@ namespace Outercurve.DTOs.Services.Azure
         }
 
         public string Account { get { return _account; } }
+
+
+        public string SasToken { get { return _client.Credentials.SASToken; } }
 
         public IAzureContainer GetContainer(string name)
         {
