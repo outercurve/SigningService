@@ -33,7 +33,10 @@
       <RefTargetDir>INSTALLFOLDER</RefTargetDir>
     </ProjectReference>
   </ItemGroup>
+  
   <Import Project="$(WixTargetsPath)" />
+  <Import Project="$(SolutionDir)\Outercurve.MSBuildTasks\bin\$(Configuration)\Outercurve.MSBuildTasks.targets" Condition="Exists('$(SolutionDir)\Outercurve.MSBuildTasks\bin\$(Configuration)\Outercurve.MSBuildTasks.targets')" />
+  
   <!--
 	To modify your build process, add your task inside one of the targets below and uncomment it.
 	Other similar extension points exist, see Wix.targets.
