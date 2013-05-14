@@ -1,4 +1,5 @@
 using System.IO;
+using System.IO.Abstractions;
 using ClrPlus.Powershell.Provider.Utility;
 using Outercurve.DTOs.Services.Azure;
 
@@ -21,9 +22,9 @@ namespace Outercurve.ToolsLib.IoItem
             {
                 return new AzureItem(input as AzureBlob);
             }
-            if (input is FileInfo)
+            if (input is FileInfoBase)
             {
-                return new FileItem(input as FileInfo);
+                return new FileItem(input as FileInfoBase);
             }
 
             return null;

@@ -35,6 +35,7 @@
         <Environment Id="PSModuleInfo" Action="set" Part="first" Name="PSModulePath" System="yes" Value="[INSTALLFOLDER]"/>
         <File Source="$(var.SolutionDir)OutercurveCmdlets\bin\$(var.Configuration)\Outercurve.Cmdlets.dll"/>
         <File Source="$(var.SolutionDir)OutercurveCmdlets\bin\$(var.Configuration)\Outercurve.psd1" />
+        <File Source="$(var.SolutionDir)OutercurveCmdlets\bin\$(var.Configuration)\OutercurveDefaults.psm1" />
       </Component>
     </ComponentGroup>
     

@@ -220,7 +220,7 @@ namespace Outercurve.Api
             //_log.Debug(strongName);
             //_log.Debug(certificate);
             
-            var authenticode = new AuthenticodeSigner(certificate);
+            var authenticode = new AuthenticodeSigner(certificate, _log);
             AttemptToSign(() => authenticode.Sign(path, strongName));
            
         }

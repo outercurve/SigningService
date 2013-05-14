@@ -3,17 +3,25 @@
   <PropertyGroup>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">$(MSBuildProjectDirectory)\..\</SolutionDir>
     <SignOutputAssembly Condition="'$(SignOutputAssembly)' == ''">$(TargetPath)</SignOutputAssembly>
-    <SignInputAssembly Condition="'$(SignInputAssembly)' == ''">$(TargetPath)</SignInputAssembly>
+    
+
     <SignOutputDir Condition="'$(SignOutputDir)' == ''">$(TargetDir)</SignOutputDir>
+    <SignOutputDir>$(TargetDir)</SignOutputDir>
     <SignConfig Condition="'$(SignConfig)' == ''">Release</SignConfig>
     <SignStrongName Condition="'$(SignStrongName)' == ''">true</SignStrongName>
-    <BuildDependsOn Condition="'$(Configuration)' == '$(SignConfig)'">
+    <!--Condition="'$(Configuration)' == '$(SignConfig) Or '"-->
+    
+    <BuildDependsOn >
       $(BuildDependsOn);
       SetCodeSignatureViaService
     </BuildDependsOn>
-  </PropertyGroup>
-  <UsingTask AssemblyFile="Outercurve.MSBuildTask.dll" TaskName="SetSignature"/>
+    </PropertyGroup>
+
+  <ItemGroup>
+    <SignInputAssembly Include="$(TargetPath)"/>
+  </ItemGroup>
+  <UsingTask AssemblyFile="Outercurve.MSBuildTasks.dll" TaskName="SetSignature"/>
   <Target Name="SetCodeSignatureViaService" AfterTargets="AfterBuild;RepackILFiles">
-    <SetSignature InputFiles="$(SignInputAssembly)" OutputDir="$(OutputDir)" StrongName="$(SignStrongName)"/>
+    <SetSignature InputFiles="@(SignInputAssembly)" OutputDir="$(SignOutputDir)" StrongName="$(SignStrongName)"/>
   </Target>
 </Project>

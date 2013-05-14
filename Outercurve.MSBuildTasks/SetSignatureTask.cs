@@ -47,22 +47,23 @@ namespace Outercurve.MSBuildTasks
         {
             try
             {
-
+                Log.LogMessage("Something");
                 SetCredentials();
                 var sourcesToDestination = MapSourcesToDestination();
+                Log.LogMessage(sourcesToDestination.ToArray().First().Destination.FullName);
 
                 var signer = new SigningService(UserName, Password,
                                         sourcesToDestination, ServiceUrl,
                                         MessageHandler, ProgressHandler);
                 signer.Sign(StrongName);
-                return true;
+                
             }
             catch (Exception e)
             {
                 Log.LogErrorFromException(e, true, true, null);
             }
 
-            return Log.HasLoggedErrors;
+            return !Log.HasLoggedErrors;
 
         }
 
@@ -78,7 +79,7 @@ namespace Outercurve.MSBuildTasks
             {
 
                 case MessageType.Info: 
-                    Log.LogMessage(MessageImportance.Low, message.Contents);
+                    Log.LogMessage(MessageImportance.Normal, message.Contents);
                     break;
                 case MessageType.Warning: 
                     Log.LogWarning(message.Contents);
@@ -91,29 +92,38 @@ namespace Outercurve.MSBuildTasks
         {
             
             var fullOutputDir = _fileSystem.Path.GetFullPath(OutputDir);
-            var alloutputs = InputFiles.Select(i => _fileSystem.Path.Combine(fullOutputDir, i.ItemSpec)).Select(s => _fileSystem.FileInfo.FromFileName(s));
-            return alloutputs.Select(i => new SourceToDestinationMap<FileInfoBase> {Source = i, Destination = i});
+            var alloutputs = InputFiles.Select(i => Path.Combine(fullOutputDir.TrimEnd('/','\\'), i.ItemSpec.Trim('/','\\')));
+            var something  = alloutputs.ToArray();
+                
+            var allOutputs = something.Select(s => _fileSystem.FileInfo.FromFileName(s)).ToArray();
+            return allOutputs.Select(i => new SourceToDestinationMap<FileInfoBase> {Source = i, Destination = i});
            
 
         }
 
         private void SetCredentials()
         {
-            if (String.IsNullOrEmpty(UserName) || String.IsNullOrEmpty(Password))
+            if (String.IsNullOrEmpty(UserName) || String.IsNullOrEmpty(Password) || String.IsNullOrEmpty(ServiceUrl))
             {
                 var cred = _credentialService.GetCredential();
                 UserName = cred.UserName;
                 Password = cred.Password;
+                ServiceUrl = _credentialService.GetUri();
             }
 
             var exceptions = new List<Exception>();
             if (String.IsNullOrEmpty(UserName))
             {
-               exceptions.Add(new ArgumentException("UserName"));
+                exceptions.Add(new Exception(@"UserName wasn't set. Either add it to your project/msbuild file or run Set-OcfDefaultRemoteService"));
             }
             if (String.IsNullOrEmpty(Password))
             {
-                exceptions.Add(new ArgumentException("Password"));
+                exceptions.Add(new ArgumentException(@"Password wasn't set. Either add it to your project/msbuild file or run Set-OcfDefaultRemoteService"));
+            }
+
+            if (String.IsNullOrEmpty(ServiceUrl))
+            {
+                exceptions.Add(new ArgumentException(@"ServiceUrl wasn't set. Either add it to your project/msbuild file or run Set-OcfDefaultRemoteService"));
             }
 
             if (exceptions.Any())

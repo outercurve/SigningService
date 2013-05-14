@@ -1,12 +1,13 @@
 using System.IO;
+using System.IO.Abstractions;
 using ClrPlus.Powershell.Provider.Utility;
 
 namespace Outercurve.ToolsLib.IoItem
 {
     class FileItem : IIoItem
     {
-        private readonly FileInfo _file;
-        public FileItem(FileInfo file)
+        private readonly FileInfoBase _file;
+        public FileItem(FileInfoBase file)
         {
             _file = file;
         }
