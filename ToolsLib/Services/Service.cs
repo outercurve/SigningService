@@ -48,7 +48,7 @@ namespace Outercurve.ToolsLib.Services
         {
             SendMessage = messageHandler ?? (m => { });
             SendProgress = progressHandler ?? (m => { });
-            Client = new JsonServiceClient(serviceUrl);
+            Client = new JsonServiceClient(serviceUrl) {Timeout = TimeSpan.FromMinutes(15)};
         }
 
         protected void ThrowErrors(IEnumerable<string> errors)
