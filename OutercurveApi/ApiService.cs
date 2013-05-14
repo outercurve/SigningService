@@ -61,11 +61,12 @@ namespace Outercurve.Api
         {
             _log.StartLog(request);
            
-            var tempPath = CopyFileToTemp(request.Container, request.Path);
-            var cert = _certs.Get(_settings.GetString("CertificatePath"));
+            
             //Errors.Add(" cert is " + cert.SerialNumber);
             try
             {
+                var tempPath = CopyFileToTemp(request.Container, request.Path);
+                var cert = _certs.Get(_settings.GetString("CertificatePath"));
                 try
                 {
                     AttemptToSignAuthenticode(tempPath, request.StrongName, cert);
