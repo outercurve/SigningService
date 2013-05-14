@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
+using ClrPlus.Core.Extensions;
 using Microsoft.WindowsAzure.Storage.Blob;
 using Outercurve.Api.Signers;
 using Outercurve.DTOs.Request;
@@ -36,23 +37,35 @@ namespace Outercurve.Api
         public GetUploadLocationResponse Post(GetUploadLocationRequest request)
         {
             _log.StartLog(request);
-            var contName = "deletable" + Guid.NewGuid().ToString("D").ToLowerInvariant();
+            try
+            {
 
-            var container = _azure.CreateContainerIfDoesNotExist(contName);
+            
+                var contName = "deletable" + Guid.NewGuid().ToString("D").ToLowerInvariant();
 
-            var blobPolicy = new SharedAccessBlobPolicy {
-                                                            Permissions = SharedAccessBlobPermissions.Read | SharedAccessBlobPermissions.Write | SharedAccessBlobPermissions.List,
-                                                            SharedAccessExpiryTime = DateTimeOffset.Now.AddHours(1)
+                var container = _azure.CreateContainerIfDoesNotExist(contName);
+
+                var blobPolicy = new SharedAccessBlobPolicy {
+                                                                Permissions = SharedAccessBlobPermissions.Read | SharedAccessBlobPermissions.Write | SharedAccessBlobPermissions.List,
+                                                                SharedAccessExpiryTime = DateTimeOffset.Now.AddHours(1)
                                                             
-                                                        };
+                                                            };
 
-            var permissions = new BlobContainerPermissions();
-            permissions.SharedAccessPolicies.Add("mypolicy", blobPolicy);
-            permissions.PublicAccess = BlobContainerPublicAccessType.Container;
-            container.SetPermissions(permissions);
-            var sharedAccessSignature = container.GetSharedAccessSignature("mypolicy");
+                var permissions = new BlobContainerPermissions();
+                permissions.SharedAccessPolicies.Add("mypolicy", blobPolicy);
+                permissions.PublicAccess = BlobContainerPublicAccessType.Container;
+                container.SetPermissions(permissions);
+                var sharedAccessSignature = container.GetSharedAccessSignature("mypolicy");
 
-            return new GetUploadLocationResponse {Name= container.Name, Location = container.Uri.ToString(), Sas = sharedAccessSignature, Account = _azure.Account};
+                return new GetUploadLocationResponse {Name= container.Name, Location = container.Uri.ToString(), Sas = sharedAccessSignature, Account = _azure.Account};
+            }
+            catch (Exception e)
+            {
+                _log.Fatal("error", e);
+                Errors.Add(e.Message + " " + e.StackTrace);
+
+                return new GetUploadLocationResponse {Errors = Errors};
+            }
         }
 
 
@@ -70,18 +83,21 @@ namespace Outercurve.Api
                 try
                 {
                     AttemptToSignAuthenticode(tempPath, request.StrongName, cert);
+                    _log.Debug("Authenticode is done");
                 }
                 catch (InvalidFileToSignException)
                 {
                      // it's probably just an OPC file, we're all good still!
                     AttemptToSignOPC(tempPath, cert);
                 }
+                _log.Debug(@"let's copy the file from {0} to {1}\{2}".format(tempPath, request.Container, request.Path));
                 CopyFileToAzure(request.Container, request.Path, tempPath);
                 return new SetCodeSignatureResponse();
             
             }
             catch (Exception e)
             {
+                _log.Fatal("error", e);
                 Errors.Add(e.Message + " " + e.StackTrace);
                 return new SetCodeSignatureResponse { Errors = Errors };
             }
@@ -97,6 +113,7 @@ namespace Outercurve.Api
             }
             catch (Exception e)
             {
+                _log.Fatal("error", e);
                 Errors.Add(e.Message + " " + e.StackTrace);
                 return new SetCodeSignatureResponse { Errors = Errors };
             }
@@ -114,6 +131,7 @@ namespace Outercurve.Api
             }
             catch (Exception e)
             {
+                _log.Fatal("error", e);
                 Errors.Add(e.Message + " " + e.StackTrace);
                 return new SetCodeSignatureResponse { Errors = Errors };
             }
@@ -130,6 +148,7 @@ namespace Outercurve.Api
             }
             catch (Exception e)
             {
+                _log.Fatal("error", e);
                 Errors.Add(e.Message + " " + e.StackTrace);
                 return new CreateUserResponse { Errors = Errors };
             }
@@ -145,6 +164,7 @@ namespace Outercurve.Api
             }
             catch (Exception e)
             {
+                _log.Fatal("error", e);
                 Errors.Add(e.Message + " " + e.StackTrace);
                 return new BaseResponse { Errors = Errors };
             }
@@ -160,6 +180,7 @@ namespace Outercurve.Api
             }
             catch (Exception e)
             {
+                _log.Fatal("error", e);
                 Errors.Add(e.Message + " " + e.StackTrace);
                 return new CreateUserResponse { Errors = Errors };
             }
@@ -194,6 +215,7 @@ namespace Outercurve.Api
             }
             catch (Exception e)
             {
+                _log.Fatal("error", e);
                 Errors.Add(e.Message + " " + e.StackTrace);
                 return new CreateUserResponse {Errors = Errors};
             }
@@ -209,6 +231,7 @@ namespace Outercurve.Api
             }
             catch (Exception e)
             {
+                _log.Fatal("error", e);
                 Errors.Add(e.Message + " " + e.StackTrace);
                 return new BaseResponse { Errors = Errors };
             }
