@@ -50,6 +50,11 @@ namespace Outercurve.Api.Signers
             catch (AggregateException ae)
             {
                 _loggingService.Debug("Something is wrong!");
+                foreach (var i in ae.Flatten().InnerExceptions)
+                {
+                    _loggingService.Error("Bad", i);    
+                }
+
                 if (ae.Flatten().InnerExceptions.OfType<DigitalSignFailure>().Any(dsf => dsf.Win32Code == 2148204547))
                 {
                     throw new InvalidFileToSignException();
