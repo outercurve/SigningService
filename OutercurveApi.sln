@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CmdletTesting", "CmdletTest
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToolsLib", "ToolsLib\ToolsLib.csproj", "{37C89AC1-7C89-4A85-81ED-98D36B8EBD42}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Outercurve.MSBuildTasks", "Outercurve.MSBuildTasks\Outercurve.MSBuildTasks.csproj", "{CA29CCF8-6BFF-4351-BF1A-4FD818077D88}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSBuildTasks", "MSBuildTasks\MSBuildTasks.csproj", "{CA29CCF8-6BFF-4351-BF1A-4FD818077D88}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSBuildTest", "MSBuildTest\MSBuildTest.csproj", "{C51B9C20-A280-4786-8D55-781E053F089E}"
 EndProject
