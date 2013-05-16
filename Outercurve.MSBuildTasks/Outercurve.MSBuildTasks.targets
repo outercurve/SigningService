@@ -8,7 +8,7 @@
     <SignOutputDir Condition="'$(SignOutputDir)' == ''">$(TargetDir)</SignOutputDir>
     <SignOutputDir>$(TargetDir)</SignOutputDir>
     <SignConfig Condition="'$(SignConfig)' == ''">Release</SignConfig>
-    <SignStrongName Condition="'$(SignStrongName)' == ''">true</SignStrongName>
+    <SignStrongName Condition="'$(SignStrongName)' == ''">false</SignStrongName>
     
     <BuildDependsOn Condition="'$(Configuration)' == '$(SignConfig)'" >
       $(BuildDependsOn);
