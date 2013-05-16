@@ -1,4 +1,4 @@
-﻿namespace Outercurve.DTOs.Response
+﻿namespace Outercurve.DTO.Response
 {
     public class GetUploadLocationResponse : BaseResponse
     {

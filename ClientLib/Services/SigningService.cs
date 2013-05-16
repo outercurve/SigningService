@@ -1,16 +1,14 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.IO.Abstractions;
 using System.Linq;
-using System.Threading;
 using ClrPlus.Core.Extensions;
-using Outercurve.DTOs.Request;
-using Outercurve.DTOs.Services.Azure;
-using Outercurve.ToolsLib.IoItem;
-using Outercurve.ToolsLib.Messages;
+using Outercurve.ClientLib.IoItem;
+using Outercurve.ClientLib.Messages;
+using Outercurve.DTO.Request;
+using Outercurve.DTO.Services.Azure;
 
-namespace Outercurve.ToolsLib.Services
+namespace Outercurve.ClientLib.Services
 {
     public class SigningService : Service
     {

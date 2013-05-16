@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Outercurve.DTOs.Request;
-using Outercurve.ToolsLib.Messages;
+using Outercurve.ClientLib.Messages;
+using Outercurve.DTO.Request;
 
-namespace Outercurve.ToolsLib.Services
+namespace Outercurve.ClientLib.Services
 {
     public class UserService : Service
     {

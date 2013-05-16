@@ -1,8 +1,7 @@
 using System.IO;
-using ClrPlus.Powershell.Provider.Utility;
-using Outercurve.DTOs.Services.Azure;
+using Outercurve.DTO.Services.Azure;
 
-namespace Outercurve.ToolsLib.IoItem
+namespace Outercurve.ClientLib.IoItem
 {
     class AzureItem : IIoItem
     {

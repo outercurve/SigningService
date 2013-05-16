@@ -1,4 +1,5 @@
 ﻿using Funq;
+using Outercurve.Api;
 using ServiceStack.Configuration;
 using ServiceStack.Logging;
 using ServiceStack.Logging.NLogger;
@@ -6,7 +7,7 @@ using ServiceStack.ServiceInterface;
 using ServiceStack.ServiceInterface.Auth;
 using ServiceStack.WebHost.Endpoints;
 
-namespace Outercurve.Api
+namespace Outercurve.SigningApi
 {
     public class AppHost : AppHostBase
 

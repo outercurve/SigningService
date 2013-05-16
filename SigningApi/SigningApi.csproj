@@ -11,8 +11,8 @@
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Outercurve.Api</RootNamespace>
-    <AssemblyName>Outercurve.Api</AssemblyName>
+    <RootNamespace>Outercurve.SigningApi</RootNamespace>
+    <AssemblyName>Outercurve.SigningApi</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
@@ -264,7 +264,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DTOs\DTOs.csproj">
+    <ProjectReference Include="..\DTO\DTO.csproj">
       <Project>{46fc0ff5-56a0-402e-952a-17f191880d97}</Project>
       <Name>DTOs</Name>
     </ProjectReference>

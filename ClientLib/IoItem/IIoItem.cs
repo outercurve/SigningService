@@ -1,9 +1,8 @@
 using System.IO;
 using System.IO.Abstractions;
-using ClrPlus.Powershell.Provider.Utility;
-using Outercurve.DTOs.Services.Azure;
+using Outercurve.DTO.Services.Azure;
 
-namespace Outercurve.ToolsLib.IoItem
+namespace Outercurve.ClientLib.IoItem
 {
     interface IIoItem
     {

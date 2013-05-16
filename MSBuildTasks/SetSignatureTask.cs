@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
-using Outercurve.ToolsLib;
-using Outercurve.ToolsLib.Messages;
-using Outercurve.ToolsLib.Services;
+using Outercurve.ClientLib;
+using Outercurve.ClientLib.Messages;
+using Outercurve.ClientLib.Services;
 
 namespace Outercurve.MSBuildTasks
 {

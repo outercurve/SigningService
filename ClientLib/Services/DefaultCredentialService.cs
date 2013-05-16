@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using ClrPlus.Core.Configuration;
+﻿using ClrPlus.Core.Configuration;
 using ClrPlus.Core.Extensions;
 
-namespace Outercurve.ToolsLib.Services
+namespace Outercurve.ClientLib.Services
 {
     
     public class DefaultCredentialService : IDefaultCredentialService

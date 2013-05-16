@@ -1,4 +1,5 @@
 ﻿using System;
+using Outercurve.SigningApi;
 
 namespace Outercurve.Api
 {

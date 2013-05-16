@@ -1,8 +1,8 @@
 using System;
 using System.Management.Automation;
 using ClrPlus.Core.Extensions;
-using Outercurve.ToolsLib.Messages;
-using Outercurve.ToolsLib.Services;
+using Outercurve.ClientLib.Messages;
+using Outercurve.ClientLib.Services;
 
 namespace Outercurve.Cmdlets.Commands
 {

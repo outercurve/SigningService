@@ -53,7 +53,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Outercurve.MSBuildTasks\Outercurve.MSBuildTasks.csproj">
+    <ProjectReference Include="..\MSBuildTasks\MSBuildTasks.csproj">
       <Project>{ca29ccf8-6bff-4351-bf1a-4fd818077d88}</Project>
       <Name>Outercurve.MSBuildTasks</Name>
     </ProjectReference>

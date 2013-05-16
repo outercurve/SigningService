@@ -49,15 +49,15 @@
   <ItemGroup>
     <Compile Include="SetSignatureTask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-	    <Compile Include="$(SolutionDir)includes\AssemblyCompany.cs" />
+    <Compile Include="$(SolutionDir)includes\AssemblyCompany.cs" />
     <Compile Include="$(SolutionDir)includes\version.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DTOs\DTOs.csproj">
+    <ProjectReference Include="..\DTO\DTO.csproj">
       <Project>{46fc0ff5-56a0-402e-952a-17f191880d97}</Project>
       <Name>DTOs</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ToolsLib\ToolsLib.csproj">
+    <ProjectReference Include="..\ClientLib\ClientLib.csproj">
       <Project>{37c89ac1-7c89-4a85-81ed-98d36b8ebd42}</Project>
       <Name>ToolsLib</Name>
     </ProjectReference>
@@ -80,7 +80,7 @@
     <Message Text="@(_ResolvedProjectReferencePaths)" />
   </Target>
   <Import Project="..\packages\ILRepackTask.1.0.11\build\net40\ILRepackTask.targets" Condition="Exists('..\packages\ILRepackTask.1.0.11\build\net40\ILRepackTask.targets')" />
-  <Import Project="..\includes\CSharp.targets"/>
+  <Import Project="..\includes\CSharp.targets" />
   <!--
   <PropertyGroup>
     <BuildDependsOn>

@@ -1,4 +1,4 @@
-namespace Outercurve.ToolsLib.Messages
+namespace Outercurve.ClientLib.Messages
 {
     public class Message
     {

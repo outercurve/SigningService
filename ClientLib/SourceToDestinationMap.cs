@@ -1,4 +1,4 @@
-namespace Outercurve.ToolsLib
+namespace Outercurve.ClientLib
 {
     public class SourceToDestinationMap<T>
     {

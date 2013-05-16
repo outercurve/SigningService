@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using ClrPlus.Core.Extensions;
-using Outercurve.DTOs.Services.Azure;
-using Outercurve.ToolsLib.Messages;
+using Outercurve.ClientLib.Messages;
+using Outercurve.DTO.Services.Azure;
 
-namespace Outercurve.ToolsLib.Services
+namespace Outercurve.ClientLib.Services
 {
     public class AzureFilesService
     {

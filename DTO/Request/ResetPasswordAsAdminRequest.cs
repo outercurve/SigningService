@@ -1,8 +1,8 @@
-﻿using Outercurve.DTOs.Response;
+﻿using Outercurve.DTO.Response;
 using ServiceStack.ServiceHost;
 using ServiceStack.ServiceInterface;
 
-namespace Outercurve.DTOs.Request
+namespace Outercurve.DTO.Request
 {
     [Route("/set-passwordasadmin")]
     [Authenticate]

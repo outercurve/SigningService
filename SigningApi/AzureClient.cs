@@ -1,4 +1,4 @@
-﻿using Outercurve.DTOs.Services.Azure;
+﻿using Outercurve.DTO.Services.Azure;
 using ServiceStack.Configuration;
 
 namespace Outercurve.Api

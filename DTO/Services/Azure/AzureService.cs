@@ -6,7 +6,7 @@ using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Auth;
 using Microsoft.WindowsAzure.Storage.Blob;
 
-namespace Outercurve.DTOs.Services.Azure
+namespace Outercurve.DTO.Services.Azure
 {
     public interface IAzureService
     {

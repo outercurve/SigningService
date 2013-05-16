@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.WindowsAzure.Storage.Blob;
 
-namespace Outercurve.DTOs.Services.Azure
+namespace Outercurve.DTO.Services.Azure
 {
     public interface IAzureContainer
     {

@@ -6,9 +6,9 @@ using System.Text;
 using System.Xml.Linq;
 using CmdletTesting.Properties;
 using Moq;
-using Outercurve.DTOs;
-using Outercurve.DTOs.Services.Azure;
-using Outercurve.ToolsLib.Services;
+using Outercurve.ClientLib.Services;
+using Outercurve.DTO;
+using Outercurve.DTO.Services.Azure;
 using Xunit;
 
 namespace CmdletTesting

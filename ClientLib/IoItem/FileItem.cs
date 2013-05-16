@@ -1,8 +1,7 @@
 using System.IO;
 using System.IO.Abstractions;
-using ClrPlus.Powershell.Provider.Utility;
 
-namespace Outercurve.ToolsLib.IoItem
+namespace Outercurve.ClientLib.IoItem
 {
     class FileItem : IIoItem
     {

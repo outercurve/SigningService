@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Outercurve.DTOs.Response
+namespace Outercurve.DTO.Response
 {
     public class BaseResponse
     {

@@ -27,8 +27,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OutercurveCmdlets\OutercurveCmdlets.csproj">
-      <Name>OutercurveCmdlets</Name>
+    <ProjectReference Include="..\Cmdlets\Cmdlets.csproj">
+      <Name>Cmdlets</Name>
       <Project>{39ad32af-d380-44ef-b97f-4a022a72e3bc}</Project>
       <Private>True</Private>
       <DoNotHarvest>True</DoNotHarvest>

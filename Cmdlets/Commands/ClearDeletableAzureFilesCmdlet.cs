@@ -5,9 +5,9 @@ using System.Management.Automation;
 using System.Text;
 using ClrPlus.Core.Extensions;
 using ClrPlus.Powershell.Core;
-using Outercurve.DTOs.Services.Azure;
-using Outercurve.ToolsLib.Messages;
-using Outercurve.ToolsLib.Services;
+using Outercurve.ClientLib.Messages;
+using Outercurve.ClientLib.Services;
+using Outercurve.DTO.Services.Azure;
 
 namespace Outercurve.Cmdlets.Commands
 {

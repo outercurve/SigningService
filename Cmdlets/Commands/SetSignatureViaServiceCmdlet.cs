@@ -7,8 +7,8 @@ using System.Management.Automation;
 using System.Management.Automation.Runspaces;
 using ClrPlus.Core.Extensions;
 using ClrPlus.Powershell.Core;
-using Outercurve.ToolsLib;
-using Outercurve.ToolsLib.Services;
+using Outercurve.ClientLib;
+using Outercurve.ClientLib.Services;
 
 namespace Outercurve.Cmdlets.Commands
 {

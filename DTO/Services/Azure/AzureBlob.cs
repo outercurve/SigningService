@@ -1,7 +1,7 @@
 using System.IO;
 using Microsoft.WindowsAzure.Storage.Blob;
 
-namespace Outercurve.DTOs.Services.Azure
+namespace Outercurve.DTO.Services.Azure
 {
     public interface IAzureBlob
     {

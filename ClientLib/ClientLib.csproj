@@ -7,8 +7,8 @@
     <ProjectGuid>{37C89AC1-7C89-4A85-81ED-98D36B8EBD42}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Outercurve.ToolsLib</RootNamespace>
-    <AssemblyName>Outercurve.ToolsLib</AssemblyName>
+    <RootNamespace>Outercurve.ClientLib</RootNamespace>
+    <AssemblyName>Outercurve.ClientLib</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
@@ -137,14 +137,14 @@
     <Compile Include="Services\SigningService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="SourceToDestinationMap.cs" />
-	<Compile Include="$(SolutionDir)includes\AssemblyCompany.cs" />
+    <Compile Include="$(SolutionDir)includes\AssemblyCompany.cs" />
     <Compile Include="$(SolutionDir)includes\version.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DTOs\DTOs.csproj">
+    <ProjectReference Include="..\DTO\DTO.csproj">
       <Project>{46fc0ff5-56a0-402e-952a-17f191880d97}</Project>
       <Name>DTOs</Name>
     </ProjectReference>

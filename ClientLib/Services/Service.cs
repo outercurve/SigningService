@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Outercurve.ToolsLib.Messages;
+using Outercurve.ClientLib.Messages;
 using ServiceStack.ServiceClient.Web;
 
-namespace Outercurve.ToolsLib.Services
+namespace Outercurve.ClientLib.Services
 {
     public abstract class Service
     {
