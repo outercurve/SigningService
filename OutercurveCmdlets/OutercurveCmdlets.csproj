@@ -210,6 +210,9 @@
     <None Include="Outercurve.psd1">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="OutercurveDefaults.psm1">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -224,7 +227,6 @@
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>
-  
   </PropertyGroup>
   <ItemGroup>
     <Content Include="Outercurve.Help.xml">
