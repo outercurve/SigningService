@@ -5,7 +5,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SigningApi", "SigningApi\Si
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DTOs", "DTOs\DTOs.csproj", "{46FC0FF5-56A0-402E-952A-17F191880D97}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OutercurveCmdlets", "OutercurveCmdlets\OutercurveCmdlets.csproj", "{39AD32AF-D380-44EF-B97F-4A022A72E3BC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cmdlets", "Cmdlets\OutercurveCmdlets.csproj", "{39AD32AF-D380-44EF-B97F-4A022A72E3BC}"
 EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Installer", "Installer\Installer.wixproj", "{5D694A48-C89A-499C-A034-2CCCFA2ACC1A}"
 EndProject
