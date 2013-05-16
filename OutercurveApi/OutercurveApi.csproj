@@ -241,6 +241,8 @@
     <Compile Include="Signers\InvalidFileToSignException.cs" />
     <Compile Include="Signers\OPCSigner.cs" />
     <Compile Include="Signers\SigningException.cs" />
+    <Compile Include="$(SolutionDir)includes\AssemblyCompany.cs" />
+    <Compile Include="$(SolutionDir)includes\version.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -296,6 +298,7 @@
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+  <Import Project="..\includes\CSharp.targets" />
   <!-- <Import Project="$(SolutionDir)\OutercurveApi\ClrPlus.sln.props" />-->
   <!--<PropertyGroup>
     <AssemblySearchPaths>$(SolutionDir)..\ClrPlus\$(BaseRelativePath);$(AssemblySearchPaths)</AssemblySearchPaths>

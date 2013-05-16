@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 using CmdletTesting.Properties;
 using Moq;
+using Outercurve.DTOs;
 using Outercurve.DTOs.Services.Azure;
 using Outercurve.ToolsLib.Services;
 using Xunit;
@@ -84,6 +86,36 @@ namespace CmdletTesting
             return new KeyValuePair<string, IAzureSharedAccessPolicy>(elem.Attribute("name").Value, mock.Object);
         }
         
+
+
+        [Fact]
+        public void TestBinary()
+        {
+            using (var s = new MemoryStream(Properties.Resources.ServiceStack_OrmLite_SqlServer))
+            {
+                Assert.True(FileSensing.IsItAPEFile(s));
+            }
+
+            using (var s = new MemoryStream(Properties.Resources.TestVsix))
+            {
+                Assert.False(FileSensing.IsItAPEFile(s));
+            }
+        }
+
+
+        [Fact]
+        public void TestZip()
+        {
+            using (var s = new MemoryStream(Resources.TestVsix))
+            {
+                Assert.True(FileSensing.IsItAZipFile(s));
+            }
+
+            using (var s = new MemoryStream(Properties.Resources.ServiceStack_OrmLite_SqlServer))
+            {
+                Assert.False(FileSensing.IsItAZipFile(s));
+            }
+        }
         
     }
 }

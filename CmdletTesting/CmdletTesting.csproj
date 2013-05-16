@@ -57,11 +57,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="TestVsix.vsix" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="SampleDataForDeleting.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="ServiceStack.OrmLite.SqlServer.dll" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

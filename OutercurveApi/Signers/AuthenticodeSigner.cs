@@ -1,8 +1,10 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using ClrPlus.Core.Extensions;
 using ClrPlus.Windows.PeBinary.Utility;
+using Outercurve.DTOs;
 using ServiceStack.Logging;
 
 namespace Outercurve.Api.Signers
@@ -29,38 +31,62 @@ namespace Outercurve.Api.Signers
 
         public void Sign(string path, bool strongName = false)
         {
-            try
+          
+          /*  try
             {
-                _loggingService.Debug("LoggingInAuthenticodeSign");
-                //LogManager.GetLogger(GetType()).DebugFormat("path is {0}", path);
-                var certRef = new CertificateReference(Certificate);
-                _loggingService.Debug("Going to load binary at {0}".format(path));
-                var r = BinaryLoad(path);
-                _loggingService.Debug("Binary at {0} loaded".format(path));
-                //LogManager.GetLogger(GetType()).DebugFormat("filename of Binary is {0}", r.Filename);
-                r.SigningCertificate = certRef;
-                if (strongName)
-                    r.StrongNameKeyCertificate = certRef;
+                
 
-                _loggingService.Debug("Going to do the signing");
-                r.Save().Wait();
-                _loggingService.Debug("signgin finished successfully");
-            }
-            
-            catch (AggregateException ae)
-            {
-                _loggingService.Debug("Something is wrong!");
-                foreach (var i in ae.Flatten().InnerExceptions)
+                try
                 {
-                    _loggingService.Error("Bad", i);    
+                    _loggingService.Debug("LoggingInAuthenticodeSign");
+                    //LogManager.GetLogger(GetType()).DebugFormat("path is {0}", path);
+                    var certRef = new CertificateReference(Certificate);
+                    _loggingService.Debug("Going to load binary at {0}".format(path));
+                    /*
+                    if (new FileInfo(path).Length < 4)
+                    {
+                        throw new InvalidFileToSignException();
+                    }*/
+                    if (strongName)
+                    {
+                        using (var wrap = new StrongNameCertificateWrapper(Certificate))
+                        {
+                            wrap.Sign(path);
+                        }
+
+                    }
+
+                    AuthenticodeCertificateWrapper.SignUsingDefaultTimeStampUrls(path, Certificate);
+/*
+                    r = BinaryLoad(path);
+                    _loggingService.Debug("Binary at {0} loaded".format(path));
+                    //LogManager.GetLogger(GetType()).DebugFormat("filename of Binary is {0}", r.Filename);
+                    r.SigningCertificate = certRef;
+                    if (strongName)
+                        r.StrongNameKeyCertificate = certRef;
+
+                    _loggingService.Debug("Going to do the signing");
+                    
+                    _loggingService.Debug("signgin finished successfully");
                 }
 
-                if (ae.Flatten().InnerExceptions.OfType<DigitalSignFailure>().Any(dsf => dsf.Win32Code == 2148204547))
+                catch (AggregateException ae)
                 {
-                    throw new InvalidFileToSignException();
+                    _loggingService.Debug("Something is wrong!");
+                    foreach (var i in ae.Flatten().InnerExceptions)
+                    {
+                        _loggingService.Error("Bad", i);
+                    }
+
+                    if (ae.Flatten()
+                          .InnerExceptions.OfType<DigitalSignFailure>()
+                          .Any(dsf => dsf.Win32Code == 2148204547))
+                    {
+                        throw new InvalidFileToSignException();
+                    }
+                    throw;
                 }
-                throw;
-            }
+            }*/
         }
 
         private Binary BinaryLoad(string path)

@@ -5,6 +5,7 @@ using System.Security.Cryptography.X509Certificates;
 using ClrPlus.Core.Extensions;
 using Microsoft.WindowsAzure.Storage.Blob;
 using Outercurve.Api.Signers;
+using Outercurve.DTOs;
 using Outercurve.DTOs.Request;
 using Outercurve.DTOs.Response;
 using Outercurve.DTOs.Services.Azure;
@@ -81,15 +82,16 @@ namespace Outercurve.Api
             {
                 var tempPath = CopyFileToTemp(request.Container, request.Path);
                 var cert = _certs.Get(_settings.GetString("CertificatePath"));
-                try
+                if (FileSensing.IsItAZipFile(tempPath))
+                {
+                    AttemptToSignOPC(tempPath, cert);
+                    _log.Debug("OPC Signing is done");
+                }
+                else
                 {
                     AttemptToSignAuthenticode(tempPath, request.StrongName, cert);
                     _log.Debug("Authenticode is done");
-                }
-                catch (InvalidFileToSignException)
-                {
-                     // it's probably just an OPC file, we're all good still!
-                    AttemptToSignOPC(tempPath, cert);
+                  
                 }
                 _log.Debug(@"let's copy the file from {0} to {1}\{2}".format(tempPath, request.Container, request.Path));
                 CopyFileToAzure(request.Container, request.Path, tempPath);
@@ -253,7 +255,7 @@ namespace Outercurve.Api
         private void AttemptToSignOPC(string path, X509Certificate2 certificate)
         {
 
-            var opc = new OPCSigner(certificate);
+            var opc = new OPCSigner(certificate, _log);
 
             AttemptToSign(() => opc.Sign(path, true));
         }

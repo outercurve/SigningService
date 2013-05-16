@@ -14,7 +14,7 @@ namespace Outercurve.Cmdlets.Commands
     [Cmdlet(AllVerbs.Assert, "OcfStrongName")]
     public class AssertStrongNameCmdlet :PSCmdlet
     {
-        [Parameter(Mandatory = true), ValidateNotNullOrEmptyAttribute]
+        [Parameter(Mandatory = true, Position = 0), ValidateNotNullOrEmptyAttribute]
         public string[] FilePath { get; set; }
 
         protected override void ProcessRecord()

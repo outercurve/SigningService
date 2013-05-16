@@ -137,6 +137,8 @@
     <Compile Include="Services\SigningService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="SourceToDestinationMap.cs" />
+	<Compile Include="$(SolutionDir)includes\AssemblyCompany.cs" />
+    <Compile Include="$(SolutionDir)includes\version.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

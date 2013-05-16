@@ -121,4 +121,10 @@
   <data name="SampleDataForDeleting" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\sampledatafordeleting.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="ServiceStack_OrmLite_SqlServer" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\servicestack.ormlite.sqlserver.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="TestVsix" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\testvsix.vsix;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

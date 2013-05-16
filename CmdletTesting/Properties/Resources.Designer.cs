@@ -63,26 +63,41 @@ namespace CmdletTesting.Properties {
         /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
         ///&lt;sample&gt;
-        ///  &lt;container name=&quot;deleteable&quot; shouldBeDeleted=&quot;true&quot;&gt;
+        ///  &lt;container name=&quot;deletable&quot; shouldBeDeleted=&quot;true&quot;&gt;
         ///    &lt;policy name=&quot;mypolicy&quot; minus=&quot;1&quot;/&gt;
-        ///
         ///  &lt;/container&gt;
-        ///  &lt;container name=&quot;not_deleteable&quot; shouldBeDeleted=&quot;false&quot;&gt;
+        ///  &lt;container name=&quot;not_deletable&quot; shouldBeDeleted=&quot;false&quot;&gt;
         ///    &lt;policy name=&quot;mypolicy&quot; minus=&quot;1&quot;/&gt;
-        ///
         ///  &lt;/container&gt;
-        ///
-        ///  &lt;container name=&quot;deletable_something&quot; shouldBeDelete=&quot;false&quot;&gt;
+        ///  &lt;container name=&quot;deletable_something&quot; shouldBeDeleted=&quot;true&quot;&gt;
         ///    &lt;policy name=&quot;mypolicy&quot; minus=&quot;1&quot;/&gt;
-        ///
         ///  &lt;/container&gt;
-        ///
-        ///  &lt;container name=&quot;deletable&quot; shouldBeDelete=&quot;false&quot;&gt;
-        ///    &lt;policy name=&quot;somethingother_mypolicy&quot;  [rest of string was truncated]&quot;;.
+        ///  &lt;container name=&quot;deletable&quot; shouldBeDeleted=&quot;false&quot;&gt;
+        ///    &lt;policy name=&quot;somethingother_mypolicy&quot; minus=&quot;1&quot;/&gt; [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string SampleDataForDeleting {
             get {
                 return ResourceManager.GetString("SampleDataForDeleting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] ServiceStack_OrmLite_SqlServer {
+            get {
+                object obj = ResourceManager.GetObject("ServiceStack_OrmLite_SqlServer", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] TestVsix {
+            get {
+                object obj = ResourceManager.GetObject("TestVsix", resourceCulture);
+                return ((byte[])(obj));
             }
         }
     }

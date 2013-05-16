@@ -17,6 +17,21 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Outercurve.MSBuildTasks", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSBuildTest", "MSBuildTest\MSBuildTest.csproj", "{C51B9C20-A280-4786-8D55-781E053F089E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "versions", "versions", "{83C2F93E-B16A-4E6A-A0FD-584B56108B90}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "includes", "includes", "{803556DE-65F7-49BC-8BF7-D33E7CD36A24}"
+	ProjectSection(SolutionItems) = preProject
+		includes\AssemblyCompany.cs = includes\AssemblyCompany.cs
+		includes\CSharp.targets = includes\CSharp.targets
+		includes\version.proj = includes\version.proj
+		includes\version.txt = includes\version.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D81297AB-E741-4589-8A08-A7967A29BEBE}"
+	ProjectSection(SolutionItems) = preProject
+		license.txt = license.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
