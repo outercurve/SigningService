@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OutercurveApi", "SigningApi\OutercurveApi.csproj", "{89EDF9ED-18BF-450C-A2AB-364031FC5E8F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SigningApi", "SigningApi\SigningApi.csproj", "{89EDF9ED-18BF-450C-A2AB-364031FC5E8F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DTOs", "DTOs\DTOs.csproj", "{46FC0FF5-56A0-402E-952A-17F191880D97}"
 EndProject
