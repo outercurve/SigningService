@@ -12,6 +12,9 @@ using Outercurve.ClientLib.Services;
 
 namespace Outercurve.MSBuildTasks
 {
+    /// <summary>
+    /// Task for Autheniticode signing or strong naming a set of files
+    /// </summary>
     public class SetSignature : Task
     {
         private readonly IFileSystem _fileSystem;
@@ -29,25 +32,50 @@ namespace Outercurve.MSBuildTasks
             _credentialService = credentialService;
         }
        
-
+        /// <summary>
+        /// The files to be signed
+        /// </summary>
         [Required]
         public ITaskItem[] InputFiles { get; set; }
 
+        /// <summary>
+        /// The output directory of the signed files (usually you just want this to be your current directory)
+        /// </summary>
         [Required]
-
         public string OutputDir { get; set; }
 
         
+        /// <summary>
+        /// True if you want to strong name your input files, false if you do not. File must already be delay signed. Has no effect on any file other than .NET assemblies
+        /// </summary>
         public bool StrongName { get; set; }
+
+        /// <summary>
+        /// The Root Url of the signing service. If this is not set and you have set your default service 
+        /// using the Set-OcfDefaultRemoteService cmdlet, the task will use the value saved via the cmdlet. If empty and no saved value exists, 
+        /// the task will end with an error.
+        /// </summary>      
         public string ServiceUrl { get; set; }
+
+        /// <summary>
+        /// The username for the signing service. If this is not set and you have set your default service 
+        /// using the Set-OcfDefaultRemoteService cmdlet, the task will use the value saved via the cmdlet. If empty and no saved value exists, 
+        /// the task will end with an error.
+        /// </summary>
         public string UserName { get; set; }
+
+        /// <summary>
+        /// The password for the signing service. If this is not set and you have set your default service 
+        /// using the Set-OcfDefaultRemoteService cmdlet, the task will use the value saved via the cmdlet. If empty and no saved value exists, 
+        /// the task will end with an error.
+        /// </summary>
         public string Password { get; set; }
         
         public override bool Execute()
         {
             try
             {
-                Log.LogMessage("Something");
+                
                 SetCredentials();
                 var sourcesToDestination = MapSourcesToDestination();
                 Log.LogMessage(sourcesToDestination.ToArray().First().Destination.FullName);
