@@ -22,14 +22,14 @@ namespace Outercurve.DTO.Request
     [Route("/get-roles")]
     [Authenticate]
     [RequiredRole("admins")]
-    public class GetRolesRequest : IReturn<GetRolesResponse>
+    public class GetRolesRequest : BaseRequest<GetRolesResponse>
     {
         public string UserName { get; set; }
     }
 
 
 
-    public abstract class ModifyRolesRequest : IReturn<BaseResponse>
+    public abstract class ModifyRolesRequest : BaseRequest<BaseResponse>
     {
         public string UserName { get; set; }
         public List<string> Roles { get; set; }

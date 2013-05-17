@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
 using ClrPlus.Platform;
 using ClrPlus.Windows.Api;
 using ClrPlus.Windows.PeBinary.Utility;
 
-namespace Outercurve.DTO
+namespace Outercurve.SigningApi
 {
     public class AuthenticodeCertificateWrapper : IDisposable
     {
@@ -21,12 +21,12 @@ namespace Outercurve.DTO
 
         public void Sign(string fileName, string timeStampUrl)
         {
-            var digitalSignInfo = default(DigitalSignInfo);
+            
             _signContext = IntPtr.Zero;
 
             // Prepare signing info: exe and cert
             //
-            digitalSignInfo = new DigitalSignInfo();
+            var digitalSignInfo = new DigitalSignInfo();
             digitalSignInfo.dwSize = Marshal.SizeOf(digitalSignInfo);
             digitalSignInfo.dwSubjectChoice = DigitalSignSubjectChoice.File;
             digitalSignInfo.pwszFileName = fileName;
@@ -37,9 +37,9 @@ namespace Outercurve.DTO
             digitalSignInfo.dwAdditionalCertChoice = DigitalSignAdditionalCertificateChoice.AddChainNoRoot;
             digitalSignInfo.pSignExtInfo = IntPtr.Zero;
 
-            var digitalSignExtendedInfo = new DigitalSignExtendedInfo("description", "http://moerinfo");
-            var ptr = Marshal.AllocCoTaskMem(Marshal.SizeOf(digitalSignExtendedInfo));
-            Marshal.StructureToPtr(digitalSignExtendedInfo, ptr, false);
+         //   var digitalSignExtendedInfo = new DigitalSignExtendedInfo("description", "http://moerinfo");
+           // var ptr = Marshal.AllocCoTaskMem(Marshal.SizeOf((object) digitalSignExtendedInfo));
+            //Marshal.StructureToPtr(digitalSignExtendedInfo, ptr, false);
             // digitalSignInfo.pSignExtInfo = ptr;
 
             // Sign exe

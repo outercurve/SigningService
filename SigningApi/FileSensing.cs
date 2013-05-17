@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Linq;
 
-namespace Outercurve.DTO
+namespace Outercurve.SigningApi
 {
     public static class FileSensing
     {

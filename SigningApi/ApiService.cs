@@ -9,6 +9,7 @@ using Outercurve.DTO;
 using Outercurve.DTO.Request;
 using Outercurve.DTO.Response;
 using Outercurve.DTO.Services.Azure;
+using Outercurve.SigningApi;
 using ServiceStack.Configuration;
 using ServiceStack.Logging;
 using ServiceStack.ServiceInterface;

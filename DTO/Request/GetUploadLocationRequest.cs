@@ -7,7 +7,7 @@ namespace Outercurve.DTO.Request
     [Route("/get-uploadlocation")]
     [Authenticate]
     [RequiredRole("signers", ApplyTo = ApplyTo.All)]
-    public class GetUploadLocationRequest : IReturn<GetUploadLocationResponse>
+    public class GetUploadLocationRequest : BaseRequest<GetUploadLocationResponse>
     {
     }
 }

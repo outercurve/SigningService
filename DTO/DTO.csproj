@@ -116,11 +116,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AuthenticodeCertificateWrapper.cs" />
-    <Compile Include="FileSensing.cs" />
     <Compile Include="$(SolutionDir)includes\AssemblyCompany.cs" />
     <Compile Include="$(SolutionDir)includes\version.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Request\BaseRequest.cs" />
     <Compile Include="Request\InitializeRequest.cs" />
     <Compile Include="Request\RemoveUserRequest.cs" />
     <Compile Include="Request\RolesRequests.cs" />
@@ -138,7 +137,6 @@
     <Compile Include="Services\Azure\AzureContainer.cs" />
     <Compile Include="Services\Azure\AzureService.cs" />
     <Compile Include="Services\Azure\AzureSharedAccessPolicy.cs" />
-    <Compile Include="StrongNameCertificateWrapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

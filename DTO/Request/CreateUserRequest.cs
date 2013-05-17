@@ -7,7 +7,7 @@ namespace Outercurve.DTO.Request
     [Route("/create-user")]
     [Authenticate]
     [RequiredRole("admins")]
-    public class CreateUserRequest : IReturn<CreateUserResponse>
+    public class CreateUserRequest : BaseRequest<CreateUserResponse>
     {
         public string Username { get; set; }
         public string Password { get; set; }

@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using ClrPlus.Core.Exceptions;
 using ClrPlus.Core.Extensions;
 using ClrPlus.Windows.Api;
 
-namespace Outercurve.DTO
+namespace Outercurve.SigningApi
 {
     public class StrongNameCertificateWrapper : IDisposable
     {

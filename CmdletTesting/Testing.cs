@@ -88,7 +88,7 @@ namespace CmdletTesting
         
 
 
-        [Fact]
+      /*  [Fact]
         public void TestBinary()
         {
             using (var s = new MemoryStream(Properties.Resources.ServiceStack_OrmLite_SqlServer))
@@ -115,7 +115,7 @@ namespace CmdletTesting
             {
                 Assert.False(FileSensing.IsItAZipFile(s));
             }
-        }
+        }*/
         
     }
 }

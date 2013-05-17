@@ -226,9 +226,11 @@
   <ItemGroup>
     <Compile Include="ApiService.cs" />
     <Compile Include="AppHost.cs" />
+    <Compile Include="AuthenticodeCertificateWrapper.cs" />
     <Compile Include="AzureClient.cs" />
     <Compile Include="CertService.cs" />
     <Compile Include="CustomBasicCredentialsProvider.cs" />
+    <Compile Include="FileSensing.cs" />
     <Compile Include="FSService.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -243,6 +245,7 @@
     <Compile Include="Signers\SigningException.cs" />
     <Compile Include="$(SolutionDir)includes\AssemblyCompany.cs" />
     <Compile Include="$(SolutionDir)includes\version.cs" />
+    <Compile Include="StrongNameCertificateWrapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

@@ -6,7 +6,7 @@ namespace Outercurve.DTO.Request
 {
     [Route("/set-password")]
     [Authenticate]
-    public class SetPasswordRequest : IReturn<BaseResponse>
+    public class SetPasswordRequest : BaseRequest<BaseResponse>
     {
         public string NewPassword { get; set; }
     }

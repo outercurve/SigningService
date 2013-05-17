@@ -7,7 +7,7 @@ namespace Outercurve.DTO.Request
     [Route("/set-passwordasadmin")]
     [Authenticate]
     [RequiredRole("admins", ApplyTo = ApplyTo.All)]
-    public class ResetPasswordAsAdminRequest : IReturn<CreateUserResponse>
+    public class ResetPasswordAsAdminRequest : BaseRequest<CreateUserResponse>
     {
         public string UserName { get; set; }
     }

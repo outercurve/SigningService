@@ -1,19 +1,18 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
+using System.Text;
+using ServiceStack.ServiceHost;
 
-namespace Outercurve.DTO.Response
+namespace Outercurve.DTO.Request
 {
-    public class BaseResponse
+    public abstract class BaseRequest<TRequest> : IReturn<TRequest>
     {
-        public BaseResponse()
+        protected BaseRequest()
         {
             Version = Assembly.GetExecutingAssembly().GetName().Version;
         }
-
-        public List<string> Warnings { get; set; }
-
-        public List<string> Errors { get; set; }
 
         public Version Version { get; private set; }
     }
