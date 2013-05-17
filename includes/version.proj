@@ -4,9 +4,8 @@
     <UpdateVersionCondition Condition="'$(UpdateVersionCondition)' == ''">Release</UpdateVersionCondition>
     <CSharpVersionFile>$(MSBuildThisFileDirectory)\version.cs</CSharpVersionFile>
     <BuildDependsOn>
-
-      $(BuildDependsOn);
-      UpdateNumbers
+      UpdateNumbers;
+      $(BuildDependsOn)
     </BuildDependsOn>
   </PropertyGroup>
   <UsingTask AssemblyFile="..\tools\Versioning.dll" TaskName="FileVersion"/>
