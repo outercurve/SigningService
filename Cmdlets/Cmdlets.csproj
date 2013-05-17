@@ -218,11 +218,11 @@
   <ItemGroup>
     <ProjectReference Include="..\DTO\DTO.csproj">
       <Project>{46fc0ff5-56a0-402e-952a-17f191880d97}</Project>
-      <Name>DTOs</Name>
+      <Name>DTO</Name>
     </ProjectReference>
     <ProjectReference Include="..\ClientLib\ClientLib.csproj">
       <Project>{37c89ac1-7c89-4a85-81ed-98d36b8ebd42}</Project>
-      <Name>ToolsLib</Name>
+      <Name>ClientLib</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

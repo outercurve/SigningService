@@ -9,7 +9,7 @@
     <SignOutputDir>$(TargetDir)</SignOutputDir>
     <SignConfig Condition="'$(SignConfig)' == ''">Release</SignConfig>
     <SignStrongName Condition="'$(SignStrongName)' == ''">false</SignStrongName>
-    
+    <SignContinueOnError Condition="'$(SignContinueOnError)' == ''">true</SignContinueOnError>
     <BuildDependsOn Condition="'$(Configuration)' == '$(SignConfig)'" >
       $(BuildDependsOn);
       SetCodeSignatureViaService
@@ -22,6 +22,6 @@
   <UsingTask AssemblyFile="Outercurve.MSBuildTasks.dll" TaskName="SetSignature"/>
   <Target Name="SetCodeSignatureViaService">
     <Message Text="@(SignInputAssembly)"/>
-    <SetSignature InputFiles="@(SignInputAssembly)" OutputDir="$(SignOutputDir)" StrongName="$(SignStrongName)"/>
+    <SetSignature InputFiles="@(SignInputAssembly)" OutputDir="$(SignOutputDir)" StrongName="$(SignStrongName)" ContinueOnError="$(SignContinueOnError)"/>
   </Target>
 </Project>

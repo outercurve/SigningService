@@ -269,7 +269,7 @@
   <ItemGroup>
     <ProjectReference Include="..\DTO\DTO.csproj">
       <Project>{46fc0ff5-56a0-402e-952a-17f191880d97}</Project>
-      <Name>DTOs</Name>
+      <Name>DTO</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

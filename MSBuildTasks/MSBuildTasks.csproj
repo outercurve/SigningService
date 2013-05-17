@@ -55,14 +55,17 @@
   <ItemGroup>
     <ProjectReference Include="..\DTO\DTO.csproj">
       <Project>{46fc0ff5-56a0-402e-952a-17f191880d97}</Project>
-      <Name>DTOs</Name>
+      <Name>DTO</Name>
     </ProjectReference>
     <ProjectReference Include="..\ClientLib\ClientLib.csproj">
       <Project>{37c89ac1-7c89-4a85-81ed-98d36b8ebd42}</Project>
-      <Name>ToolsLib</Name>
+      <Name>ClientLib</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Outercurve.MSBuildTasks.nuspec">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
     <None Include="Outercurve.MSBuildTasks.targets">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -81,19 +84,22 @@
   </Target>
   <Import Project="..\packages\ILRepackTask.1.0.11\build\net40\ILRepackTask.targets" Condition="Exists('..\packages\ILRepackTask.1.0.11\build\net40\ILRepackTask.targets')" />
   <Import Project="..\includes\CSharp.targets" />
-  <!--
+  <UsingTask AssemblyFile="..\tools\Versioning.dll" TaskName="GetVersion" />
   <PropertyGroup>
-    <BuildDependsOn>
+    <BuildDependsOn Condition="'$(Configuration)' == 'Release'">
       $(BuildDependsOn);
-      CopyMSBuildTasks
+      CreateNuGetPackage
     </BuildDependsOn>
   </PropertyGroup>
-  
-  <Target Name="CopyMSBuildTasks">
-    <ItemGroup>
-      <CopyFile Include="$(TargetPath)"/>
-      <CopyFile Include="$(TargetDir)\Outercurve.MSBuildTasks.targets"/>
-    </ItemGroup>
-    <Copy SourceFiles="@(CopyFile)" DestinationFolder="$(SolutionDir)\tools"/>
-  </Target>-->
+  <Target Name="CreateNuGetPackage">
+    <GetVersion File="..\includes\version.txt">
+      <Output TaskParameter="Major" PropertyName="Major" />
+      <Output TaskParameter="Minor" PropertyName="Minor" />
+      <Output TaskParameter="Build" PropertyName="Build" />
+    </GetVersion>
+    <PropertyGroup>
+      <NuGetVersion>$(Major).$(Minor).$(Build)</NuGetVersion>
+    </PropertyGroup>
+    <Exec Command="$(SolutionDir)\.nuget\nuget.exe pack Outercurve.MSBuildTasks.nuspec -OutputDirectory $(TargetDir) -p version=$(NuGetVersion)" />
+  </Target>
 </Project>

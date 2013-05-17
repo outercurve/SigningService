@@ -146,11 +146,12 @@
   <ItemGroup>
     <ProjectReference Include="..\DTO\DTO.csproj">
       <Project>{46fc0ff5-56a0-402e-952a-17f191880d97}</Project>
-      <Name>DTOs</Name>
+      <Name>DTO</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Import Project="..\includes\CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

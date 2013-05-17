@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>Outercurve.MSBuildTasks</id>
+        <version>$version$</version>
+        <title>Outercurve MSBuild Tasks</title>
+        <authors>Outercurve Foundation</authors>
+        <owners />
+        <licenseUrl>http://opensource.org/licenses/Apache-2.0</licenseUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>Outercurve project MSBuild tasks. Currently supports signing.</description>
+    </metadata>
+    <files>
+        <file src="bin\Release\Outercurve.MSBuildTasks.dll" target="Outercurve.MSBuildTasks\Outercurve.MSBuildTasks.dll" />
+        <file src="bin\Release\Outercurve.MSBuildTasks.targets" target="Outercurve.MSBuildTasks\Outercurve.MSBuildTasks.targets" />
+        <file src="bin\Release\Outercurve.MSBuildTasks.xml" target="Outercurve.MSBuildTasks\Outercurve.MSBuildTasks.xml" />
+    </files>
+</package>

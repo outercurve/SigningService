@@ -4,12 +4,12 @@
 	<Product Id="*" Name="Outercurve Tools"  UpgradeCode="ab72ce91-9455-4f4a-98f6-a0ffedc80236" Language="1033" Version="$(var.VERSION)" Manufacturer="Outercurve Foundation, CoApp Project">
 		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" Description="Outercurve Tools" InstallPrivileges="elevated"/>
 
-		<!--<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />-->
+		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
 		<MediaTemplate  EmbedCab="yes"/>
 
-    <!--<Upgrade Id="a43c25d7-b22a-411c-b780-3a83479b1d26">
+    <Upgrade Id="a43c25d7-b22a-411c-b780-3a83479b1d26">
       <UpgradeVersion OnlyDetect="no" Property="PREVIOUSFOUND" Minimum="1.0.0" IncludeMinimum="yes" Maximum="$(var.VERSION)" IncludeMaximum="no"></UpgradeVersion>
-    </Upgrade> -->
+    </Upgrade>
 
     <Directory Id="TARGETDIR" Name="SourceDir" DiskId="1">
       <Directory Id="ProgramFilesFolder">
@@ -37,6 +37,7 @@
         <File Source="$(var.SolutionDir)Cmdlets\bin\$(var.Configuration)\Outercurve.Cmdlets.dll"/>
         <File Source="$(var.SolutionDir)Cmdlets\bin\$(var.Configuration)\Outercurve.psd1" />
         <File Source="$(var.SolutionDir)Cmdlets\bin\$(var.Configuration)\OutercurveDefaults.psm1" />
+      <File Source="$(var.SolutionDir)Cmdlets\bin\$(var.Configuration)\Outercurve.Help.xml"/>
       </Component>
     </ComponentGroup>
     
