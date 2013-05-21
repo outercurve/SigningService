@@ -229,7 +229,7 @@
   <PropertyGroup>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="Outercurve.Help.xml">
+    <Content Include="Outercurve.Cmdlets.dll-help.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

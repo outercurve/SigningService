@@ -1,5 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <UsingTask AssemblyFile="..\tools\Versioning.dll" TaskName="GetVersion"/>
+  
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
@@ -38,15 +40,22 @@
       <RefTargetDir>INSTALLFOLDER</RefTargetDir>
     </ProjectReference>
   </ItemGroup>
+  <Target Name="BeforeBuild">
+    <Message Text="We're In Before Build" Importance="high"/>
+    <!--<GetVersion File="..\includes\version.txt">
+      <Output TaskParameter="Version" PropertyName="VersionOut"/>
+    </GetVersion>-->
+    <CreateProperty Value="$(OutputName).$(VersionOut)">
+      <Output TaskParameter="Value" PropertyName="OutputName"/>
+    </CreateProperty>
+    <Message Text="Output Name is $(OutputName)" Importance="high"/>
+  </Target>
   <Import Project="$(WixTargetsPath)" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Import Project="..\includes\CSharp.targets" />
-  <!--
-	To modify your build process, add your task inside one of the targets below and uncomment it.
-	Other similar extension points exist, see Wix.targets.
-	<Target Name="BeforeBuild">
-	</Target>
-	<Target Name="AfterBuild">
+  
+
+    <!--<Target Name="AfterBuild">
 	</Target>
 	-->
 </Project>

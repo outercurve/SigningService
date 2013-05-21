@@ -37,7 +37,7 @@
         <File Source="$(var.SolutionDir)Cmdlets\bin\$(var.Configuration)\Outercurve.Cmdlets.dll"/>
         <File Source="$(var.SolutionDir)Cmdlets\bin\$(var.Configuration)\Outercurve.psd1" />
         <File Source="$(var.SolutionDir)Cmdlets\bin\$(var.Configuration)\OutercurveDefaults.psm1" />
-      <File Source="$(var.SolutionDir)Cmdlets\bin\$(var.Configuration)\Outercurve.Help.xml"/>
+      <File Source="$(var.SolutionDir)Cmdlets\bin\$(var.Configuration)\Outercurve.Cmdlets.dll-help.xml"/>
       </Component>
     </ComponentGroup>
     
