@@ -1,18 +1,26 @@
 ﻿using Outercurve.DTO.Services.Azure;
 using ServiceStack.Configuration;
 
-namespace Outercurve.Api
+namespace Outercurve.SigningApi
 {
     public class AzureClient
     {
         
-        private readonly AzureService _root;
+        private readonly IAzureService _root;
         
         public AzureClient(AppSettings settings)
         {
             var account = settings.GetString("AzureAccount");
-            var key = settings.GetString("AzureKey");
-            _root = new AzureService(account, key);
+            if (account == "--SAMPLE--")
+            {
+                _root = AzureService.UseStorageEmulator();
+            }
+            else
+            {
+                var key = settings.GetString("AzureKey");
+                _root = new AzureService(account, key);    
+            }
+            
 
         }
         public IAzureService GetRoot()
@@ -20,4 +28,5 @@ namespace Outercurve.Api
             return _root;
         }
     }
+
 }

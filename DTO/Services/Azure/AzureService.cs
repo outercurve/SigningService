@@ -17,6 +17,8 @@ namespace Outercurve.DTO.Services.Azure
         IAzureContainer GetContainer(string name);
     }
 
+    
+
     public class AzureService : IAzureService
     {
         private readonly CloudBlobClient _client;
@@ -25,6 +27,11 @@ namespace Outercurve.DTO.Services.Azure
         {
             _client = client;
             
+        }
+
+        public static IAzureService UseStorageEmulator()
+        {
+            return new AzureService();
         }
 
         public AzureService(string account, string azureKey)
@@ -40,6 +47,22 @@ namespace Outercurve.DTO.Services.Azure
             var storageAccount = new CloudStorageAccount(new StorageCredentials(account, azureKey), new Uri(blobUri),
                                                          null, null);
             _client = storageAccount.CreateCloudBlobClient();
+        }
+
+        internal AzureService()
+        {
+            _client = CloudStorageAccount.DevelopmentStorageAccount.CreateCloudBlobClient();
+            _account = CloudStorageAccount.DevelopmentStorageAccount.Credentials.AccountName;
+        }
+
+        public static IAzureService CreateDeveloperSasService(string account, string sasToken)
+        {
+
+            account = CloudStorageAccount.DevelopmentStorageAccount.Credentials.AccountName;
+            var storageAccount = new CloudStorageAccount(new StorageCredentials(sasToken),
+                                                         new Uri("http://127.0.0.1:10000/{0}/".format(account)), null,
+                                                                 null);
+            return new AzureService(storageAccount.CreateCloudBlobClient()) {_account = account};
         }
 
         public static IAzureService CreateSasService(string account, string sasToken)

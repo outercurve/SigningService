@@ -1,14 +1,19 @@
 ﻿using System;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
+using Outercurve.SigningApi.Properties;
 using ServiceStack.Logging;
 
-namespace Outercurve.Api
+namespace Outercurve.SigningApi
 {
     public class CertService
     {
         public X509Certificate2 Get(string name)
         {
+            if (name == "--SAMPLE--")
+            {
+                return GetSample();
+            }
             var s = name.Split('\\').Skip(1).ToArray();
             var store = new X509Store((StoreName) Enum.Parse(typeof (StoreName), s[1]), (StoreLocation) Enum.Parse(typeof (StoreLocation), s[0]));
             store.Open(OpenFlags.ReadOnly);
@@ -24,6 +29,11 @@ namespace Outercurve.Api
             log.Debug("End Certs");
             return store.Certificates.Cast<X509Certificate2>().FirstOrDefault(c => c.Thumbprint == s[2]);
 
+        }
+
+        X509Certificate2 GetSample()
+        {
+            return new X509Certificate2(Resources.Sign, "", X509KeyStorageFlags.Exportable);
         }
     }
 }

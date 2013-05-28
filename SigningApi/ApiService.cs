@@ -4,17 +4,14 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using ClrPlus.Core.Extensions;
 using Microsoft.WindowsAzure.Storage.Blob;
-using Outercurve.Api.Signers;
-using Outercurve.DTO;
 using Outercurve.DTO.Request;
 using Outercurve.DTO.Response;
 using Outercurve.DTO.Services.Azure;
-using Outercurve.SigningApi;
+using Outercurve.SigningApi.Signers;
 using ServiceStack.Configuration;
-using ServiceStack.Logging;
 using ServiceStack.ServiceInterface;
 
-namespace Outercurve.Api
+namespace Outercurve.SigningApi
 {
     public class ApiService : Service
     {

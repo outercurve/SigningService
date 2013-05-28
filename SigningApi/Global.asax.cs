@@ -1,7 +1,6 @@
 ﻿using System;
-using Outercurve.SigningApi;
 
-namespace Outercurve.Api
+namespace Outercurve.SigningApi
 {
     public class Global : System.Web.HttpApplication
     {

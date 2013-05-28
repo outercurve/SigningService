@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Abstractions;
 using System.Linq;
-using System.Text;
+using System.Threading;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 using Outercurve.ClientLib;
@@ -15,10 +15,12 @@ namespace Outercurve.MSBuildTasks
     /// <summary>
     /// Task for Autheniticode signing or strong naming a set of files
     /// </summary>
-    public class SetSignature : Task
+    public class SetSignature : Task, ICancelableTask
     {
         private readonly IFileSystem _fileSystem;
         private readonly IDefaultCredentialService _credentialService;
+
+        private CancellationTokenSource _source = new CancellationTokenSource();
 
         public SetSignature(): this(new FileSystem(), new DefaultCredentialService()) 
         {
@@ -75,15 +77,17 @@ namespace Outercurve.MSBuildTasks
         {
             try
             {
-                
+                //can we run Execute twice? I don't know so we'll say reset the CTS here
+                _source = new CancellationTokenSource();
+   
                 SetCredentials();
-                var sourcesToDestination = MapSourcesToDestination();
-                Log.LogMessage(sourcesToDestination.ToArray().First().Destination.FullName);
+                var sourcesToDestination = MapSourcesToDestination().ToArray();
+                Log.LogMessage(sourcesToDestination.First().Destination.FullName);
 
                 var signer = new SigningService(UserName, Password,
                                         sourcesToDestination, ServiceUrl,
                                         MessageHandler, ProgressHandler);
-                signer.Sign(StrongName);
+                signer.Sign(StrongName, _source);
                 
             }
             catch (Exception e)
@@ -93,6 +97,11 @@ namespace Outercurve.MSBuildTasks
 
             return !Log.HasLoggedErrors;
 
+        }
+
+        public void Cancel()
+        {
+            _source.Cancel();
         }
 
         private void ProgressHandler(ProgressMessage progressMessage)

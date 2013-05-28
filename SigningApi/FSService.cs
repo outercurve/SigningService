@@ -4,7 +4,7 @@ using System.Web;
 using ServiceStack.Configuration;
 using ServiceStack.Logging;
 
-namespace Outercurve.Api
+namespace Outercurve.SigningApi
 {
     public class FsService
     {

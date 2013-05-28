@@ -1,5 +1,6 @@
 using System;
 using System.Management.Automation;
+using System.Net;
 using ClrPlus.Core.Extensions;
 using Outercurve.ClientLib.Messages;
 using Outercurve.ClientLib.Services;
@@ -30,6 +31,11 @@ namespace Outercurve.Cmdlets.Commands
             if (String.IsNullOrWhiteSpace(ServiceUrl))
             {
                 ThrowTerminatingError(new ErrorRecord(new ParameterBindingException("ServiceUrl was null or empty"), "", ErrorCategory.InvalidArgument, null)); 
+            }
+
+            if (ServiceUrl.StartsWith("http://127.0.0.1"))
+            {
+                WebRequest.DefaultWebProxy = new WebProxy("127.0.0.1", 8888);
             }
         }
 

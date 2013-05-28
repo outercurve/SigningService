@@ -7,12 +7,11 @@ using System.Text;
 using System.Web;
 using ClrPlus.Core.Collections;
 using ClrPlus.Scripting.Languages.PropertySheet;
-using Outercurve.SigningApi;
 using ServiceStack.Configuration;
 using ServiceStack.ServiceInterface;
 using ServiceStack.ServiceInterface.Auth;
 
-namespace Outercurve.Api
+namespace Outercurve.SigningApi
 {
     
         public class CustomBasicAuthProvider : BasicAuthProvider

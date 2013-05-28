@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 using ClrPlus.Core.Extensions;
 using ServiceStack.Logging;
 
-namespace Outercurve.Api
+namespace Outercurve.SigningApi
 {
     public class LoggingService
     {

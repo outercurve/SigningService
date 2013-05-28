@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Outercurve.Api.Signers
+﻿namespace Outercurve.SigningApi.Signers
 {
     public class AlreadySignedException : SigningException
     {

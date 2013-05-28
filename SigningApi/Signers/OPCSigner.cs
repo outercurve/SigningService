@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO.Packaging;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using ClrPlus.Core.Extensions;
 
-namespace Outercurve.Api.Signers
+namespace Outercurve.SigningApi.Signers
 {
     public class OPCSigner 
     {

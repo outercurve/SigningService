@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.IO.Abstractions;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using ClrPlus.Core.Extensions;
 using Outercurve.ClientLib.IoItem;
 using Outercurve.ClientLib.Messages;
@@ -17,7 +19,7 @@ namespace Outercurve.ClientLib.Services
        
         private readonly IEnumerable<SourceToDestinationMap<IIoItem>> _files;
        
-
+        
 
         public SigningService(string username, string password, IEnumerable<SourceToDestinationMap<FileInfoBase>> sourcesToDestinations, string serviceUrl, Action<Message> messageHandler = null, Action<ProgressMessage> progressHandler = null)
             : base(username, password, serviceUrl,messageHandler, progressHandler)
@@ -41,9 +43,11 @@ namespace Outercurve.ClientLib.Services
        
 
 
-        private void GetAzureService(string account, string sas)
+        private void GetAzureService(string account, string sas, string uri)
         {
-            var azure = AzureService.CreateSasService(account, sas);
+            
+            var azure = uri.StartsWith("http://127.0.0.1:10000") ? AzureService.CreateDeveloperSasService(account, sas) : AzureService.CreateSasService(account, sas);
+            
             _service = azure;
         }
 
@@ -51,18 +55,29 @@ namespace Outercurve.ClientLib.Services
         /// warning
         /// </summary>
         /// <returns>message if there was a terminating error, else null</returns>
-        public void Sign(bool strongName)
+        public void Sign(bool strongName, CancellationTokenSource tokenSource = default(CancellationTokenSource))
         {
-            var response = Client.Post(new GetUploadLocationRequest());
-            GetAzureService(response.Account, response.Sas);
-            var location = _service.GetContainer(response.Name);
-            foreach (var f in _files)
-            {
-               SignEachFile(location, f, strongName);
-                
-            }
+            var t = new Task(() =>
+                {
+                    var response = Client.Post(new GetUploadLocationRequest());
+                    
+                    GetAzureService(response.Account, response.Sas, response.Location);
+                    var location = _service.GetContainer(response.Name);
+                    foreach (var f in _files)
+                    {
+                        if (tokenSource != null && tokenSource.IsCancellationRequested)
+                        {
+                            break;
+                        }
+                        SignEachFile(location, f, strongName);
 
-            
+                    }
+                });
+
+            t.RunSynchronously();
+
+            t.Wait();
+
         }
 
 
@@ -144,7 +159,7 @@ namespace Outercurve.ClientLib.Services
         {
 
 
-            var blob = IoItemFactory.Create(container.GetBlob(file.Source.Name));
+            var blob = IoItemFactory.Create(container.GetBlob(file.Source.Name.ToLower()));
             CopyTo(file.Source, blob);
             
             

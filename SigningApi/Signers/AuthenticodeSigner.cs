@@ -1,14 +1,8 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using ClrPlus.Core.Extensions;
+﻿using System.Security.Cryptography.X509Certificates;
 using ClrPlus.Windows.PeBinary.Utility;
-using Outercurve.DTO;
-using Outercurve.SigningApi;
 using ServiceStack.Logging;
 
-namespace Outercurve.Api.Signers
+namespace Outercurve.SigningApi.Signers
 {
     
 

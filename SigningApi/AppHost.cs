@@ -1,5 +1,4 @@
 ﻿using Funq;
-using Outercurve.Api;
 using ServiceStack.Configuration;
 using ServiceStack.Logging;
 using ServiceStack.Logging.NLogger;
