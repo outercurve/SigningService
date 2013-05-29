@@ -17,19 +17,21 @@ Features include:
   * For [VS2012](http://go.microsoft.com/fwlink/?linkid=254364&clcid=0x409) or [VS2010](http://go.microsoft.com/fwlink/?linkid=254269&clcid=0x409)
 
 ###Folder Structure
-* _ClientLib_
+* _[ClientLib](https://github.com/outercurve/SigningService/tree/master/ClientLib)_
   * A library of code used by clients of the SigningApi. The common code between the Cmdlets and the MSBuildTasks
+* _[Cmdlets](https://github.com/outercurve/SigningService/tree/master/Cmdlets)_
+  * Powershell Cmdlets for initializing, maintaining the service and signing files.
 * _CmdletTesting_
   * A few basic unit tests for the Cmdlets. Not very well maintained.
-* _DTO_
+* _[DTO](https://github.com/outercurve/SigningService/tree/master/DTO)_
   * The request and response objects for the service used by ServiceStack. Also includes some wrapping of Azure Blob Service to make it more testable
-* _Installer_
+* _[Installer](https://github.com/outercurve/SigningService/tree/master/Installer)_
   * Wix project for installing the Cmdlets
-* _MSBuildTasks_
+* _[MSBuildTasks](https://github.com/outercurve/SigningService/tree/master/MSBuildTasks)_
   * MSBuild tasks and targets for signing files as part of the build process
 * _MSBuildTest_
   * Unit tests for the MSBuildTasks. Not well maintained.
-* _SigningApi_
+* _[SigningApi](https://github.com/outercurve/SigningService/tree/master/SigningApi)_
   * ServiceStack based web service running the signing tool
 * _includes_
   * Files that ware used as part of the build process. Includes the version files
