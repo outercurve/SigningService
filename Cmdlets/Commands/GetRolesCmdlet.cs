@@ -9,7 +9,7 @@ using Outercurve.ClientLib.Services;
 
 namespace Outercurve.Cmdlets.Commands
 {
-    [Cmdlet(AllVerbs.Get, "OcfRolesAsAdmin")]
+    [Cmdlet(AllVerbs.Get, "OcfRoles")]
     public class GetRolesCmdlet : CredentialedApiCmdlet
     {
         protected override void ProcessRecord()
