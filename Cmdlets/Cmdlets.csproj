@@ -196,6 +196,7 @@
     <Compile Include="Commands\ApiCmdlet.cs" />
     <Compile Include="Commands\ClearDeletableAzureFilesCmdlet.cs" />
     <Compile Include="Commands\CredentialedApiCmdlet.cs" />
+    <Compile Include="Commands\GetRolesAsAdminCmdlet.cs" />
     <Compile Include="Commands\GetRolesCmdlet.cs" />
     <Compile Include="Commands\InitializeCmdlet.cs" />
     <Compile Include="Commands\NewApiUserCmdlet.cs" />

@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
-using System.Text;
 using ClrPlus.Core.Extensions;
 using ClrPlus.Powershell.Core;
 using Outercurve.ClientLib.Services;
@@ -10,8 +8,12 @@ using Outercurve.ClientLib.Services;
 namespace Outercurve.Cmdlets.Commands
 {
     [Cmdlet(AllVerbs.Get, "OcfRolesAsAdmin")]
-    public class GetRolesCmdlet : CredentialedApiCmdlet
+    public class GetRolesAsAdminCmdlet : CredentialedApiCmdlet
     {
+        [Parameter(Position = 0, Mandatory = true, HelpMessage = "Username to get roles for ")]
+        [ValidateNotNullOrEmpty]
+        public string Username { get; set; }
+
         protected override void ProcessRecord()
         {
             base.ProcessRecord();
@@ -19,7 +21,7 @@ namespace Outercurve.Cmdlets.Commands
             {
                 var userService = new UserService(Credential.UserName, Credential.Password.ToUnsecureString(),
                                                   ServiceUrl, MessageHandler, ProgressHandler);
-                WriteObject(userService.GetRoles(), true);
+                WriteObject(userService.GetRolesAsAdmin(Username), true);
             }
             catch (AggregateException ae)
             {
@@ -29,7 +31,7 @@ namespace Outercurve.Cmdlets.Commands
             {
                 ThrowTerminatingError(LazyCreateError(e));
             }
-
+             
         }
     }
 }

@@ -42,9 +42,16 @@ namespace Outercurve.ClientLib.Services
             
         }
 
-        public IEnumerable<string> GetRoles(string user)
+        public IEnumerable<string> GetRolesAsAdmin(string user)
         {
-            var r = Client.Post(new GetRolesRequest {UserName = user});
+            var r = Client.Post(new GetRolesAsAdminRequest {UserName = user});
+            ThrowErrors(r.Errors);
+            return r.Roles;
+        }
+
+        public IEnumerable<string> GetRoles()
+        {
+            var r = Client.Post(new GetRolesRequest());
             ThrowErrors(r.Errors);
             return r.Roles;
         }

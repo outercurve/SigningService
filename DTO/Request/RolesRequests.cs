@@ -19,12 +19,19 @@ namespace Outercurve.DTO.Request
     {
     }
 
-    [Route("/get-roles")]
+    [Route("/get-rolesasadmin")]
     [Authenticate]
     [RequiredRole("admins")]
-    public class GetRolesRequest : BaseRequest<GetRolesResponse>
+    public class GetRolesAsAdminRequest : BaseRequest<GetRolesResponse>
     {
         public string UserName { get; set; }
+    }
+
+
+    [Route("/get-roles")]
+    [Authenticate]
+    public class GetRolesRequest : BaseRequest<GetRolesResponse>
+    {
     }
 
 

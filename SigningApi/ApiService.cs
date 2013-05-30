@@ -116,10 +116,44 @@ namespace Outercurve.SigningApi
             {
                 _log.Fatal("error", e);
                 Errors.Add(e.Message + " " + e.StackTrace);
-                return new SetCodeSignatureResponse { Errors = Errors };
+                return new BaseResponse { Errors = Errors };
             }
                 
 
+        }
+
+
+        public GetRolesResponse Post(GetRolesAsAdminRequest request)
+        {
+            _log.StartLog(request);
+            try
+            {
+                var roles = _authProvider.GetRoles(request.UserName);
+                return new GetRolesResponse {Roles = roles.ToList()};
+            }
+            catch (Exception e)
+            {
+                _log.Fatal("error", e );
+                Errors.Add(e.Message + " " + e.StackTrace);
+                return new GetRolesResponse {Errors = Errors};
+            }
+        }
+
+        public GetRolesResponse Post(GetRolesRequest request)
+        {
+            _log.StartLog(request);
+            try
+            {
+
+                var roles = _authProvider.GetRoles(this.GetSession().UserAuthName);
+                return new GetRolesResponse {Roles = roles.ToList()};
+            }
+            catch (Exception e)
+            {
+                _log.Fatal("error", e);
+                Errors.Add(e.Message + " " + e.StackTrace);
+                return new GetRolesResponse {Errors = Errors};
+            }
         }
 
         public BaseResponse Post(UnsetRolesRequest request)
