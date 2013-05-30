@@ -1,25 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  
-  <Choose>
-    <When Condition="'$(RunILRepack)' != ''">
-      
-    </When>
-    <When Condition="'$(RunILRepack)' == '' And '$(Configuration)' == 'Release'">
-      <PropertyGroup>
-        <RunILRepack>true</RunILRepack>
-      </PropertyGroup>
-    </When>
-    <Otherwise>
-      <PropertyGroup>
-      <RunILRepack>false</RunILRepack>
-      </PropertyGroup>
-    </Otherwise>
-  </Choose>
   <PropertyGroup>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">$(MSBuildProjectDirectory)\..\</SolutionDir>
   
-    
+    <RunILRepack Condition="'$(RunILRepack)' == ''">true</RunILRepack>
     <BuildDependsOn Condition="$(RunILRepack)">
       $(BuildDependsOn);
       RepackILFiles
@@ -28,7 +12,7 @@
   <UsingTask AssemblyFile="ILRepackTask.dll" TaskName="ILRepackTask"/>
   <UsingTask AssemblyFile="ILRepackTask.dll" TaskName="FindAssembliesInOutputDirTask"/>
   <UsingTask AssemblyFile="ILRepackTask.dll" TaskName="GetMostQualifiedNamesForAssemblies"/>
-  <Target Name="RepackILFiles">
+  <Target Name="RepackILFiles" AfterTargets="AfterBuild">
    
     <PropertyGroup>
       <OutputAssembly Condition="'$(OutputAssembly)' == ''">$(TargetPath)</OutputAssembly>
@@ -44,6 +28,6 @@
     <FindAssembliesInOutputDirTask InputAssemblies="$(InputAssemblies)" OutputDir="$(SearchPath)" OutputAssemblyName="$(OutputAssembly)">
       <Output PropertyName="ActualAssemblies" TaskParameter="AssembliesInOutputDir"/>
     </FindAssembliesInOutputDirTask>
-    <ILRepackTask InputAssemblies="$(ActualAssemblies)" OutputFile="$(OutputAssembly)"  XmlDocumentation="true"/>
+    <ILRepackTask InputAssemblies="$(ActualAssemblies)" OutputFile="$(OutputAssembly)"  XmlDocumentation="true" Internalize="true"/>
   </Target>
 </Project>
