@@ -27,11 +27,13 @@ namespace Outercurve.Cmdlets.Commands
                 if (!Mscoree.StrongNameSignatureVerificationEx(f.FullName, true, ref verified))
                 {
                     Console.WriteLine("Couldn't attempt to verify {0}");
+                    WriteObject(f);
                     continue;
                 }
                 if (!verified)
                 {
                     Console.WriteLine("{0} is not strong-named.");
+                    WriteObject(f);
                 }
             }
             
