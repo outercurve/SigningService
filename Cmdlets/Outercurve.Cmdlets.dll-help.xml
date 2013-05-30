@@ -173,7 +173,7 @@
 	<command:details>
 		<command:name>Assert-OcfStrongName</command:name>
 		<maml:description>
-			<maml:para></maml:para>
+			<maml:para>Verifies that a file is strong-named</maml:para>
 		</maml:description>
 		<maml:copyright>
 			<maml:para />
@@ -192,7 +192,7 @@
 			<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="false" position="0">
 				<maml:name>FilePath</maml:name>
 				<maml:description>
-					<maml:para></maml:para>
+					<maml:para>The files to have their strong-naming verified</maml:para>
 				</maml:description>
 				<command:parameterValue required="true" variableLength="true">String[]</command:parameterValue>
 			</command:parameter>
@@ -202,7 +202,7 @@
 		<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="false" position="0">
 			<maml:name>FilePath</maml:name>
 			<maml:description>
-				<maml:para></maml:para>
+				<maml:para>The files to have their strong-naming verified</maml:para>
 			</maml:description>
 			<command:parameterValue required="true" variableLength="true">String[]</command:parameterValue>
 			<dev:type>
@@ -245,6 +245,21 @@
 		</maml:alert>
 	</maml:alertSet>
 	<command:examples>
+		<command:example>
+			<maml:title>--------------  Verifying a strong name of an assembly  --------------</maml:title>
+			<maml:introduction>
+				<maml:para></maml:para>
+			</maml:introduction>
+			<dev:code>PS C:\&gt; Assert-OcfStrongName file.dll</dev:code>
+			<dev:remarks>
+				<maml:para>Verifies that file.dll has been strong named</maml:para>
+			</dev:remarks>
+			<command:commandLines>
+				<command:commandLine>
+					<command:commandText></command:commandText>
+				</command:commandLine>
+			</command:commandLines>
+		</command:example>
 	</command:examples>
 	<maml:relatedLinks>
 	</maml:relatedLinks>
@@ -254,7 +269,7 @@
 	<command:details>
 		<command:name>Clear-DeletableAzureFiles</command:name>
 		<maml:description>
-			<maml:para></maml:para>
+			<maml:para>Deletes temporary Azure files used by signing service</maml:para>
 		</maml:description>
 		<maml:copyright>
 			<maml:para />
@@ -265,7 +280,7 @@
 	</command:details>
 	<maml:description>
 	<!--This is the Description section-->
-		<maml:para></maml:para>
+		<maml:para>As part of the signing process, the user is given temporary access to an Azure Blob container to upload their file to be signed. Once the service completes signing, the user can download the file from the Azure Blob container. The temporary access is set to expire after a given time (by default 12 hours). This script goes through all the temporary Azure containers used by the singing service (containers with names starting with the word &quot;deletable&quot;) and deletes those where the user&apos;s temporary access has expired.</maml:para>
 	</maml:description>
 	<command:syntax>
 		<command:syntaxItem>
@@ -273,7 +288,7 @@
 			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="0">
 				<maml:name>AzureAccount</maml:name>
 				<maml:description>
-					<maml:para></maml:para>
+					<maml:para>The account name for the Azure Blob Storage account</maml:para>
 				</maml:description>
 				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
 			</command:parameter>
@@ -283,7 +298,7 @@
 			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="1">
 				<maml:name>AzurePassword</maml:name>
 				<maml:description>
-					<maml:para></maml:para>
+					<maml:para>The account key for the Azure Blob Storage account</maml:para>
 				</maml:description>
 				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
 			</command:parameter>
@@ -293,7 +308,7 @@
 		<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="0">
 			<maml:name>AzureAccount</maml:name>
 			<maml:description>
-				<maml:para></maml:para>
+				<maml:para>The account name for the Azure Blob Storage account</maml:para>
 			</maml:description>
 			<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
 			<dev:type>
@@ -305,7 +320,7 @@
 		<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="1">
 			<maml:name>AzurePassword</maml:name>
 			<maml:description>
-				<maml:para></maml:para>
+				<maml:para>The account key for the Azure Blob Storage account</maml:para>
 			</maml:description>
 			<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
 			<dev:type>
@@ -702,7 +717,7 @@
 	<command:details>
 		<command:name>Get-OcfRoles</command:name>
 		<maml:description>
-			<maml:para></maml:para>
+			<maml:para>Retrieves the set of roles for a signing service user</maml:para>
 		</maml:description>
 		<maml:copyright>
 			<maml:para />
@@ -713,7 +728,7 @@
 	</command:details>
 	<maml:description>
 	<!--This is the Description section-->
-		<maml:para></maml:para>
+		<maml:para>Each user has a set of roles as part of the signing service. This cmdlet returns the user&apos;s roles. </maml:para>
 	</maml:description>
 	<command:syntax>
 		<command:syntaxItem>
@@ -800,7 +815,7 @@
 	<command:returnValues>
 		<command:returnValue>
 			<dev:type>
-				<maml:name></maml:name>
+				<maml:name>string[]</maml:name>
 				<maml:uri/>
 				<maml:description>
 					<maml:para></maml:para>
@@ -1579,7 +1594,7 @@
 	<command:details>
 		<command:name>Set-OcfDefaultRemoteService</command:name>
 		<maml:description>
-			<maml:para>Saves encrypted signing service URL and credentials to the registry</maml:para>
+			<maml:para></maml:para>
 		</maml:description>
 		<maml:copyright>
 			<maml:para />
@@ -1598,7 +1613,7 @@
 			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
 				<maml:name>ServiceUrl</maml:name>
 				<maml:description>
-					<maml:para>The Root Url of the Signing Service</maml:para>
+					<maml:para></maml:para>
 				</maml:description>
 				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
 			</command:parameter>
@@ -1608,7 +1623,7 @@
 			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
 				<maml:name>Credential</maml:name>
 				<maml:description>
-					<maml:para>The Credentials of the signing service</maml:para>
+					<maml:para></maml:para>
 				</maml:description>
 				<command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
 			</command:parameter>
@@ -1628,7 +1643,7 @@
 		<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
 			<maml:name>ServiceUrl</maml:name>
 			<maml:description>
-				<maml:para>The Root Url of the Signing Service</maml:para>
+				<maml:para></maml:para>
 			</maml:description>
 			<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
 			<dev:type>
@@ -1640,7 +1655,7 @@
 		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
 			<maml:name>Credential</maml:name>
 			<maml:description>
-				<maml:para>The Credentials of the signing service</maml:para>
+				<maml:para></maml:para>
 			</maml:description>
 			<command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
 			<dev:type>
