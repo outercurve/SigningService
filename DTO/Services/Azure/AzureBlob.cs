@@ -10,6 +10,8 @@ namespace Outercurve.DTO.Services.Azure
         void UploadTo(Stream s);
         string Uri { get; }
         string Name { get; }
+        string GetText();
+        void SaveTo(string s);
     }
 
     public class AzureBlob : IAzureBlob
@@ -34,6 +36,32 @@ namespace Outercurve.DTO.Services.Azure
         public void UploadTo(Stream s)
         {
             _blob.UploadFromStream(s);
+        }
+
+        public string GetText()
+        {
+            using (var s = OpenRead())
+            {
+                var r = new StreamReader(s);
+                return r.ReadToEnd();
+            }
+        }
+
+        /// <summary>
+        /// from http://stackoverflow.com/questions/1879395/how-to-generate-a-stream-from-a-string
+        /// </summary>
+        /// <param name="s"></param>
+        public void SaveTo(string s)
+        {
+            using (var stream = new MemoryStream())
+            {
+                var writer = new StreamWriter(stream);
+                writer.Write(s);
+                writer.Flush();
+                stream.Position = 0;
+
+                UploadTo(stream);
+            }
         }
 
         public string Uri { get { return _blob.Uri.ToString(); } }
