@@ -148,3 +148,5 @@ $RECYCLE.BIN/
 .DS_Store
 
 packages
+
+SigningApi/logs
