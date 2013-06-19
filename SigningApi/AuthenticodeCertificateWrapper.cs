@@ -1,6 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
+using ClrPlus.Core.Extensions;
 using ClrPlus.Platform;
 using ClrPlus.Windows.Api;
 using ClrPlus.Windows.PeBinary.Utility;
@@ -44,6 +45,7 @@ namespace Outercurve.SigningApi
 
             // Sign exe
             //
+            
             if ((!CryptUi.CryptUIWizDigitalSign(DigitalSignFlags.NoUI, IntPtr.Zero, null, ref digitalSignInfo, ref _signContext)))
             {
                 var rc = (uint)Marshal.GetLastWin32Error();
@@ -59,7 +61,7 @@ namespace Outercurve.SigningApi
 
         
 
-        public static void SignUsingDefaultTimeStampUrls(string filename, X509Certificate2 cert)
+        public static void SignUsingDefaultTimeStampUrls(string filename, X509Certificate2 cert, LoggingService loggingService = null)
         {
             filename.TryHardToMakeFileWriteable();
 
@@ -71,12 +73,17 @@ namespace Outercurve.SigningApi
             // try up to three times each url if we get a timestamp error
             for (var i = 0; i < urls.Length * 3; i++)
             {
+                var url = urls[i % urls.Length];
                 try
                 {
                     using (var wrap = new AuthenticodeCertificateWrapper(cert))
                     {
+                        
+                        if (loggingService != null)
+                            loggingService.Debug("Going to sign and timestamp with {0} for {1}".format(url, filename));
                         wrap.Sign(filename, urls[i % urls.Length]);
-
+                        if (loggingService != null)
+                            loggingService.Debug("Sign and timestamp worked with {0} for {1}".format(url, filename));
                         // whee it worked!
                         signedOk = true;
                         break;
@@ -86,6 +93,8 @@ namespace Outercurve.SigningApi
                 }
                 catch (FailedTimestampException)
                 {
+                    if (loggingService != null)
+                        loggingService.Debug("Failed sign and timestamp with {0} for {1}".format(url, filename));
                     continue;
                 }
             }

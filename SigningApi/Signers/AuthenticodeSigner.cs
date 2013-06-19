@@ -1,4 +1,5 @@
 ﻿using System.Security.Cryptography.X509Certificates;
+using ClrPlus.Core.Extensions;
 using ClrPlus.Windows.PeBinary.Utility;
 using ServiceStack.Logging;
 
@@ -51,7 +52,9 @@ namespace Outercurve.SigningApi.Signers
 
                     }
 
-                    AuthenticodeCertificateWrapper.SignUsingDefaultTimeStampUrls(path, Certificate);
+                    _loggingService.Debug("Signing {0} with {1}".format(path, Certificate.SerialNumber));
+                    AuthenticodeCertificateWrapper.SignUsingDefaultTimeStampUrls(path, Certificate, _loggingService);
+                    _loggingService.Debug("Finished signing {0} with {1}".format(path, Certificate.SerialNumber));
 /*
                     r = BinaryLoad(path);
                     _loggingService.Debug("Binary at {0} loaded".format(path));
