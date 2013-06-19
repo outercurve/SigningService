@@ -8,6 +8,7 @@ using ClrPlus.Core.Extensions;
 using Outercurve.ClientLib.IoItem;
 using Outercurve.ClientLib.Messages;
 using Outercurve.DTO.Request;
+using Outercurve.DTO.Response;
 using Outercurve.DTO.Services.Azure;
 
 namespace Outercurve.ClientLib.Services
@@ -18,8 +19,6 @@ namespace Outercurve.ClientLib.Services
         private IAzureService _service;
        
         private readonly IEnumerable<SourceToDestinationMap<IIoItem>> _files;
-       
-        
 
         public SigningService(string username, string password, IEnumerable<SourceToDestinationMap<FileInfoBase>> sourcesToDestinations, string serviceUrl, Action<Message> messageHandler = null, Action<ProgressMessage> progressHandler = null)
             : base(username, password, serviceUrl,messageHandler, progressHandler)
@@ -69,7 +68,7 @@ namespace Outercurve.ClientLib.Services
                         {
                             break;
                         }
-                        SignEachFile(location, f, strongName);
+                        SignAFile(location, f, strongName, tokenSource);
 
                     }
                 });
@@ -82,7 +81,7 @@ namespace Outercurve.ClientLib.Services
 
 
 
-        private void CopyTo(IIoItem source, IIoItem destination)
+        private TimeSpan CopyTo(IIoItem source, IIoItem destination)
         {
             SendMessage(new Message
                                 {
@@ -91,6 +90,7 @@ namespace Outercurve.ClientLib.Services
                                                                                          .FullName),
                                     MessageType = MessageType.Info
                                 });
+            var startTime = DateTime.Now;
             using (var from = source.OpenRead())
                 {
                 using (var to = destination.OpenWrite())
@@ -149,35 +149,59 @@ namespace Outercurve.ClientLib.Services
 
                 }
             }
+            var endTime = DateTime.Now;
+            return endTime - startTime;
         }
 
-        
-
-
-
-        private void SignEachFile(IAzureContainer container, SourceToDestinationMap<IIoItem> file, bool strongName)
+        private void SignAFile(IAzureContainer container, SourceToDestinationMap<IIoItem> file, bool strongName, CancellationTokenSource tokenSource)
         {
 
-
             var blob = IoItemFactory.Create(container.GetBlob(file.Source.Name.ToLower()));
-            CopyTo(file.Source, blob);
-            
-            
+            var copyToTime = CopyTo(file.Source, blob);
+
+            if (tokenSource != null && tokenSource.IsCancellationRequested)
+            {
+                return;
+            }
+
             SendMessage(new Message
                        {
                            Contents = "Starting signing for {0}".format(file.Destination.FullName),
                            MessageType = MessageType.Info
                        });
            
-                var r = Client.Post(new SetCodeSignatureRequest
-                {
-                    Container = container.Name,
-                    Path = blob.Name,
-                    StrongName = strongName
-                });
+            var r = Client.Post(new SetCodeSignatureRequest
+            {
+                Container = container.Name,
+                Path = blob.Name,
+                StrongName = strongName
+            });
 
-                ThrowErrors(r.Errors);
-                
+            ThrowErrors(r.Errors);
+
+            var statusResult = KeepGettingStatus(container.Name, blob.Name, copyToTime, tokenSource);
+            if (statusResult.TimedOut)
+            {
+                throw new TimeoutException("The signing job has timed out and probably failed. If you'd like to check the status in the future for this job," +
+                                            "you can call get-status again with Container={0} and Path={1}".format(container.Name, blob.Name));
+            }
+
+            if (statusResult.Exception != null)
+            {
+                throw statusResult.Exception;
+            }
+
+            if (statusResult.Status == StatusCode.Failed)
+            {
+                throw new Exception("The signing job for {0}/{1} has failed.".format(container.Name, blob.Name));
+            }
+
+
+
+            if (tokenSource != null && tokenSource.IsCancellationRequested)
+            {
+                return;
+            }
             
 
             SendMessage(new Message
@@ -188,6 +212,77 @@ namespace Outercurve.ClientLib.Services
 
             
             CopyTo(blob, file.Destination);
+        }
+
+        private StatusResult KeepGettingStatus(string container, string blob, TimeSpan timeToUpload, CancellationTokenSource tokenSource)
+        {
+            
+            try
+            {
+                StatusCode c = StatusCode.WaitingToRun;
+                 SendMessage(new Message
+                        {
+                            Contents = @"We're waiting for signing to run on {0}\{1}".format(container, blob)
+                        });
+                var getStatusMessage = new GetStatus {Container = container, Path = blob};
+                while (c == StatusCode.WaitingToRun)
+                {
+                    if (tokenSource != null && tokenSource.IsCancellationRequested)
+                    {
+                        return null;
+                    }
+                    Thread.Sleep(3000);
+                    var r = Client.Post(getStatusMessage);
+                    ThrowErrors(r.Errors);
+                    c = r.Status;
+                }
+                
+                SendMessage(new Message
+                {
+                    Contents = @"Signing has started for {0}\{1}".format(container, blob)
+                });
+
+                var startSigningTime = DateTime.Now;
+                
+                // we wait three times as long as timeToUpload
+                while (c == StatusCode.Running)
+                {
+                    if (tokenSource != null && tokenSource.IsCancellationRequested)
+                    {
+                        return null;
+                    }
+
+                    if ((DateTime.Now - startSigningTime) > new TimeSpan(timeToUpload.Ticks*3))
+                    {
+                        return new StatusResult {TimedOut = true};
+                    }
+                    var r = Client.Post(getStatusMessage);
+                    ThrowErrors(r.Errors);
+                    c = r.Status;
+
+                }
+
+                return new StatusResult {Status = c};
+
+                
+
+            }
+            catch (Exception e)
+            {
+                return new StatusResult {Exception = e};
+            }
+            
+           
+        }
+
+
+        public class StatusResult
+        {
+            public StatusCode Status { get; set; }
+
+            public bool TimedOut { get; set;  }
+
+            public Exception Exception { get; set; }
         }
     }
 }

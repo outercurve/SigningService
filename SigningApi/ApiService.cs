@@ -16,22 +16,29 @@ namespace Outercurve.SigningApi
     public class ApiService : Service
     {
         private readonly IAzureService _azure;
+        private readonly AzureClient _azureClient;
         private readonly FsService _fs;
         private readonly CertService _certs;
         private readonly AppSettings _settings;
         private readonly CustomBasicAuthProvider _authProvider;
         private readonly List<String> Errors = new List<string>();
         private readonly LoggingService _log;
+        private readonly JobScheduler _jobScheduler;
+        private readonly SigningJobCreator _jobCreator;
         public const int HOURS_FILE_SHOULD_BE_ACCESSIBLE = 12;
 
-        public ApiService(AzureClient azure, FsService fs, CertService certs, AppSettings settings, CustomBasicAuthProvider authProvider, LoggingService log)
+        public ApiService(AzureClient azureClient, FsService fs, CertService certs, AppSettings settings, CustomBasicAuthProvider authProvider, 
+            LoggingService log, JobScheduler jobScheduler, SigningJobCreator jobCreator)
         {
-            _azure = azure.GetRoot();
+            _azure = azureClient.GetRoot();
+            _azureClient = azureClient;
             _fs = fs;
             _certs = certs;
             _settings = settings;
             _authProvider = authProvider;
             _log = log;
+            _jobScheduler = jobScheduler;
+            _jobCreator = jobCreator;
         }
 
         public GetUploadLocationResponse Post(GetUploadLocationRequest request)
@@ -78,23 +85,9 @@ namespace Outercurve.SigningApi
             //Errors.Add(" cert is " + cert.SerialNumber);
             try
             {
-                var tempPath = CopyFileToTemp(request.Container, request.Path);
-                var cert = _certs.Get(_settings.GetString("CertificatePath"));
-                if (FileSensing.IsItAZipFile(tempPath))
-                {
-                    AttemptToSignOPC(tempPath, cert);
-                    _log.Debug("OPC Signing is done");
-                }
-                else
-                {
-                    AttemptToSignAuthenticode(tempPath, request.StrongName, cert);
-                    _log.Debug("Authenticode is done");
-                  
-                }
-                _log.Debug(@"let's copy the file from {0} to {1}\{2}".format(tempPath, request.Container, request.Path));
-                CopyFileToAzure(request.Container, request.Path, tempPath);
+                _azureClient.GetBlob(request.Container, _jobCreator.GetStatusPath(request.Path)).SaveTo(StatusCode.WaitingToRun.ToString());
+                _jobScheduler.Add(_jobCreator.CreateJob(request.Container, request.Path, request.StrongName));
                 return new SetCodeSignatureResponse();
-            
             }
             catch (Exception e)
             {
@@ -136,6 +129,30 @@ namespace Outercurve.SigningApi
                 _log.Fatal("error", e );
                 Errors.Add(e.Message + " " + e.StackTrace);
                 return new GetRolesResponse {Errors = Errors};
+            }
+        }
+
+        public GetStatusResponse Post(GetStatus request)
+        {
+            _log.StartLog(request);
+            try
+            {
+                var status = _azureClient.GetBlob(request.Container, _jobCreator.GetStatusPath(request.Path)).GetText();
+                if (String.IsNullOrWhiteSpace(status))
+                {
+                    throw new Exception(@"Status couldn't be retrieved for {0}\{1}".format(request.Container,
+                                                                                           request.Path));
+                }
+
+                var result = (StatusCode) Enum.Parse(typeof (StatusCode), status);
+                return new GetStatusResponse {Status = result};
+            }
+             
+            catch (Exception e)
+            {
+                _log.Fatal("error", e);
+                Errors.Add(e.Message + " " + e.StackTrace);
+                return new GetStatusResponse { Errors = Errors };
             }
         }
 
@@ -272,92 +289,8 @@ namespace Outercurve.SigningApi
             }
         }
 
-        private void AttemptToSignAuthenticode(string path, bool strongName, X509Certificate2 certificate)
-        {
-           
-            //_log.Debug(path);
-            //_log.Debug(strongName);
-            //_log.Debug(certificate);
-            
-            var authenticode = new AuthenticodeSigner(certificate, _log);
-            AttemptToSign(() => authenticode.Sign(path, strongName));
-           
-        }
 
-        private void AttemptToSignOPC(string path, X509Certificate2 certificate)
-        {
 
-            var opc = new OPCSigner(certificate, _log);
-
-            AttemptToSign(() => opc.Sign(path, true));
-        }
-
-        private void AttemptToSign(Action signAction)
-        {
-           /* try
-            {*/
-                signAction();
-               
-            /*}
-            catch (FileNotFoundException fnfe)
-            {
-                ThrowTerminatingError(new ErrorRecord(fnfe, "none", ErrorCategory.OpenError, null));
-            }
-            catch (PathTooLongException ptle)
-            {
-                ThrowTerminatingError(new ErrorRecord(ptle, "none", ErrorCategory.InvalidData, null));
-            }
-            catch (UnauthorizedAccessException uae)
-            {
-                ThrowTerminatingError(new ErrorRecord(uae, "none", ErrorCategory.PermissionDenied, null));
-            }
-            catch (Exception e)
-            {
-                ThrowTerminatingError(new ErrorRecord(e, "none", ErrorCategory.NotSpecified, null));
-            }*/
-           // return false;
-        }
-
-       private string CopyFileToTemp(string container, string file)
-       {
-           var blob  = GetBlob(container, file);
-           if (blob == null)
-               return null;
-           
-           var temp = _fs.CreateTempPath(file.Replace('/', '_'));
-          
-           using (var blobStream = blob.OpenRead())
-           {
-               using (var tempFile = _fs.OpenWrite(temp))
-               {
-                   blobStream.CopyTo(tempFile);
-               }
-           }
-
-           return temp;
-       }
-
-        private void CopyFileToAzure(string container, string file, string tempFile)
-        {
-           var blob  = GetBlob(container, file);
-
-           using (var fileStream = _fs.OpenRead(tempFile))
-           {
-               using (var blobStream = blob.OpenWrite())
-               {
-                   fileStream.CopyTo(blobStream);
-               }
-           }
-        }
-
-        private IAzureBlob GetBlob(string container, string fileName)
-        {
-            var cont = _azure.Containers.FirstOrDefault(c => c.Name == container);
-            if (cont == null)
-                return null;
-
-            var file = cont.Files.FirstOrDefault(f => f.Name == fileName);
-            return file;
-        }
+        
     }
 }

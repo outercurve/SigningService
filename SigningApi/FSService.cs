@@ -26,7 +26,7 @@ namespace Outercurve.SigningApi
 
         public string CreateTempPath(string fileName)
         {
-            var tempFolder = _settings.GetString("TempFolder") != null ? HttpContext.Current.Server.MapPath(_settings.GetString("TempFolder")) : Path.GetTempPath();
+            var tempFolder = Path.GetTempPath();//_settings.GetString("TempFolder") != null ? HttpContext.Current.Server.MapPath(_settings.GetString("TempFolder")) : Path.GetTempPath();
             LogManager.GetLogger(GetType()).DebugFormat("temp folder is: {0}", tempFolder);
             return Path.Combine(tempFolder, Guid.NewGuid().ToString() + fileName);
         }
