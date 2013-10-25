@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using ClrPlus.Core.Extensions;
+
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Auth;
 using Microsoft.WindowsAzure.Storage.Blob;
@@ -60,7 +60,7 @@ namespace Outercurve.DTO.Services.Azure
 
             account = CloudStorageAccount.DevelopmentStorageAccount.Credentials.AccountName;
             var storageAccount = new CloudStorageAccount(new StorageCredentials(sasToken),
-                                                         new Uri("http://127.0.0.1:10000/{0}/".format(account)), null,
+                                                         new Uri(String.Format("http://127.0.0.1:10000/{0}/",account)), null,
                                                                  null);
             return new AzureService(storageAccount.CreateCloudBlobClient()) {_account = account};
         }
@@ -69,7 +69,7 @@ namespace Outercurve.DTO.Services.Azure
         {
             
             var storageAccount = new CloudStorageAccount(new StorageCredentials(sasToken),
-                                                         new Uri("https://{0}.blob.core.windows.net".format(account)), null, null);
+                                                         new Uri(String.Format("https://{0}.blob.core.windows.net",account)), null, null);
             return new AzureService(storageAccount.CreateCloudBlobClient()) {_account = account};
         }
 

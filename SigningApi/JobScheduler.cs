@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using SigningServiceBase;
 
 namespace Outercurve.SigningApi
 {
-    public class JobScheduler : IDisposable
+    public class JobScheduler : IDisposable, IDependency
     {
         readonly BlockingCollection<Job> _jobs = new BlockingCollection<Job>();
         private Task _jobsTask;

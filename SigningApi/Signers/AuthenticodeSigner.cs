@@ -1,25 +1,18 @@
 ﻿using System.Security.Cryptography.X509Certificates;
-using ClrPlus.Core.Extensions;
-using ClrPlus.Windows.PeBinary.Utility;
+
 using ServiceStack.Logging;
+using SigningServiceBase;
 
 namespace Outercurve.SigningApi.Signers
 {
     
 
-    public class AuthenticodeSigner
+    public class AuthenticodeSigner : IDependency
     {
-        private LoggingService _loggingService;
-        private
-        const BinaryLoadOptions BINARY_LOAD_OPTIONS = BinaryLoadOptions.PEInfo |
-            BinaryLoadOptions.VersionInfo |
-            BinaryLoadOptions.Managed |
-            BinaryLoadOptions.Resources |
-            BinaryLoadOptions.Manifest |
-            BinaryLoadOptions.UnsignedManagedDependencies |
-            BinaryLoadOptions.MD5;
+        private readonly ILoggingService _loggingService;
+      
 
-        public AuthenticodeSigner(X509Certificate2 certificate, LoggingService log) {
+        public AuthenticodeSigner(X509Certificate2 certificate, ILoggingService log) {
             Certificate = certificate;
             _loggingService = log;
         }
@@ -85,12 +78,6 @@ namespace Outercurve.SigningApi.Signers
                     throw;
                 }
             }*/
-        }
-
-        private Binary BinaryLoad(string path)
-        {
-            LogManager.GetLogger(GetType()).DebugFormat("path is {0}", path);
-            return Binary.Load(path, BINARY_LOAD_OPTIONS).Result;
         }
     }
 }

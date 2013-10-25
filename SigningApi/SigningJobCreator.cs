@@ -3,29 +3,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Web;
-using ClrPlus.Core.Extensions;
+
 using Outercurve.DTO.Response;
 using Outercurve.DTO.Services.Azure;
 using Outercurve.SigningApi.Signers;
 using ServiceStack.Configuration;
+using SigningServiceBase;
 
 namespace Outercurve.SigningApi
 {
-    public class SigningJobCreator
+    public class SigningJobCreator :  IDependency
     {
-        private readonly AzureClient _azureClient;
+        private readonly IAzureClient _azureClient;
         private readonly LoggingService _log;
-        private readonly CertService _certs;
+        private readonly ICertificateService _certs;
 
-        private readonly AppSettings _settings;
-        
 
-        public SigningJobCreator(AzureClient azureClient, LoggingService log, CertService certs,  AppSettings settings)
+        public SigningJobCreator(IAzureClient azureClient, LoggingService log, ICertificateService certs)
         {
             _azureClient = azureClient;
             _log = log;
             _certs = certs;
-            _settings = settings;
         }
 
         public Job CreateJob(string container, string path, bool strongName)
@@ -63,7 +61,7 @@ namespace Outercurve.SigningApi
             try
             {
                 var tempPath = _azureClient.CopyFileToTemp(container, path);
-                var cert = _certs.Get(_settings.GetString("CertificatePath"));
+                var cert = _certs.Get();
                 if (FileSensing.IsItAZipFile(tempPath))
                 {
                     AttemptToSignOPC(tempPath, cert);

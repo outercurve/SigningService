@@ -1,9 +1,8 @@
 using System;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
-using ClrPlus.Core.Exceptions;
-using ClrPlus.Core.Extensions;
-using ClrPlus.Windows.Api;
+
+using Outercurve.SigningApi.WinApi;
 
 namespace Outercurve.SigningApi
 {
@@ -28,7 +27,7 @@ namespace Outercurve.SigningApi
         {
             if (!Mscoree.StrongNameSignatureGeneration(fileName, _keyContainer, IntPtr.Zero, 0, 0, 0))
             {
-                throw new ClrPlusException("Unable Strong name assembly '{0}'.".format(fileName));
+                throw new ClrPlusException(String.Format("Unable Strong name assembly '{0}'.",fileName));
             }
         }
 

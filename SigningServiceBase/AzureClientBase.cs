@@ -1,35 +1,29 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.IO.Abstractions;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Outercurve.DTO.Services.Azure;
-using ServiceStack.Configuration;
 
-namespace Outercurve.SigningApi
+namespace SigningServiceBase
 {
-    public class AzureClient
+    public abstract class AzureClientBase : IAzureClient
     {
-        private readonly FsService _fs;
+        private readonly IFileSystem _fs;
 
-        private readonly IAzureService _root;
+
+        protected IAzureService Root;
         
-        public AzureClient(AppSettings settings, FsService fs)
+
+        protected AzureClientBase(IFileSystem fs)
         {
-            _fs = fs;
-            var account = settings.GetString("AzureAccount");
-            if (account == "--SAMPLE--")
-            {
-                _root = AzureService.UseStorageEmulator();
-            }
-            else
-            {
-                var key = settings.GetString("AzureKey");
-                _root = new AzureService(account, key);    
-            }
             
-
         }
-        
+
         public IAzureService GetRoot()
         {
-            return _root;
+            return Root;
         }
 
         public string CopyFileToTemp(string container, string file)
@@ -42,7 +36,7 @@ namespace Outercurve.SigningApi
 
             using (var blobStream = blob.OpenRead())
             {
-                using (var tempFile = _fs.OpenWrite(temp))
+                using (var tempFile = _fs.File.OpenWrite(temp))
                 {
                     blobStream.CopyTo(tempFile);
                 }
@@ -55,7 +49,7 @@ namespace Outercurve.SigningApi
         {
             var blob = GetBlob(container, file);
 
-            using (var fileStream = _fs.OpenRead(tempFile))
+            using (var fileStream = _fs.File.OpenRead(tempFile))
             {
                 blob.UploadTo(fileStream);
             }
@@ -63,7 +57,7 @@ namespace Outercurve.SigningApi
 
         public IAzureBlob GetBlob(string container, string fileName)
         {
-            var cont = _root.Containers.FirstOrDefault(c => c.Name == container);
+            var cont = Root.Containers.FirstOrDefault(c => c.Name == container);
             if (cont == null)
                 return null;
 
@@ -71,5 +65,4 @@ namespace Outercurve.SigningApi
             return file;
         }
     }
-
 }

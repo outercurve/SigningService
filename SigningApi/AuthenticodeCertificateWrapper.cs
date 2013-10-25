@@ -1,14 +1,15 @@
 using System;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
-using ClrPlus.Core.Extensions;
-using ClrPlus.Platform;
-using ClrPlus.Windows.Api;
-using ClrPlus.Windows.PeBinary.Utility;
+
+
+using Outercurve.SigningApi.WinApi;
+using SigningServiceBase;
 
 namespace Outercurve.SigningApi
 {
-    public class AuthenticodeCertificateWrapper : IDisposable
+    public class AuthenticodeCertificateWrapper : ITransientDependency, IDisposable
     {
         private IntPtr _digitalSignInfo = IntPtr.Zero;
         private IntPtr _signContext = IntPtr.Zero;
@@ -19,6 +20,17 @@ namespace Outercurve.SigningApi
             _cert = certificate;
         }
 
+
+        public void Sign(Stream s, string timeStampUrl)
+        {
+            _signContext = IntPtr.Zero;
+
+            // Prepare signing info: exe and cert
+            //
+            var digitalSignInfo = new DigitalSignInfo();
+            digitalSignInfo.dwSize = Marshal.SizeOf(digitalSignInfo);
+            digitalSignInfo.dwSubjectChoice = DigitalSignSubjectChoice.Blob;
+        }
 
         public void Sign(string fileName, string timeStampUrl)
         {
@@ -52,59 +64,14 @@ namespace Outercurve.SigningApi
                 if (rc == 0x8007000d)
                 {
                     // this is caused when the timestamp server fails; which seems intermittent for any timestamp service.
-                    throw new FailedTimestampException(fileName, timeStampUrl);
+                   // throw new FailedTimestampException(fileName, timeStampUrl);
                 }
-                throw new DigitalSignFailure(fileName, rc);
+              //  throw new DigitalSignFailure(fileName, rc);
             }
 
         }
 
-        
-
-        public static void SignUsingDefaultTimeStampUrls(string filename, X509Certificate2 cert, LoggingService loggingService = null)
-        {
-            filename.TryHardToMakeFileWriteable();
-
-            var urls = new[] {
-                "http://timestamp.verisign.com/scripts/timstamp.dll", "http://timestamp.comodoca.com/authenticode", "http://www.startssl.com/timestamp", "http://timestamp.globalsign.com/scripts/timstamp.dll", "http://time.certum.pl/"
-            };
-
-            var signedOk = false;
-            // try up to three times each url if we get a timestamp error
-            for (var i = 0; i < urls.Length * 3; i++)
-            {
-                var url = urls[i % urls.Length];
-                try
-                {
-                    using (var wrap = new AuthenticodeCertificateWrapper(cert))
-                    {
-                        
-                        if (loggingService != null)
-                            loggingService.Debug("Going to sign and timestamp with {0} for {1}".format(url, filename));
-                        wrap.Sign(filename, urls[i % urls.Length]);
-                        if (loggingService != null)
-                            loggingService.Debug("Sign and timestamp worked with {0} for {1}".format(url, filename));
-                        // whee it worked!
-                        signedOk = true;
-                        break;
-                    }
-                    
-                    
-                }
-                catch (FailedTimestampException)
-                {
-                    if (loggingService != null)
-                        loggingService.Debug("Failed sign and timestamp with {0} for {1}".format(url, filename));
-                    continue;
-                }
-            }
-
-            if (!signedOk)
-            {
-                // we went thru each one 3 times, and it never signed?
-                throw new FailedTimestampException(filename, "All of them!");
-            }
-        }
+       
 
 
 

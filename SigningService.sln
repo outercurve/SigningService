@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SigningApi", "SigningApi\SigningApi.csproj", "{89EDF9ED-18BF-450C-A2AB-364031FC5E8F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DTO", "DTO\DTO.csproj", "{46FC0FF5-56A0-402E-952A-17F191880D97}"
@@ -29,6 +31,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		license.txt = license.txt
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SigningServiceBase", "SigningServiceBase\SigningServiceBase.csproj", "{BF3A0D22-FB23-452C-93A3-8F97898D6A4F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -120,6 +124,16 @@ Global
 		{C51B9C20-A280-4786-8D55-781E053F089E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{C51B9C20-A280-4786-8D55-781E053F089E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{C51B9C20-A280-4786-8D55-781E053F089E}.Release|x86.ActiveCfg = Release|Any CPU
+		{BF3A0D22-FB23-452C-93A3-8F97898D6A4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF3A0D22-FB23-452C-93A3-8F97898D6A4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF3A0D22-FB23-452C-93A3-8F97898D6A4F}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{BF3A0D22-FB23-452C-93A3-8F97898D6A4F}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{BF3A0D22-FB23-452C-93A3-8F97898D6A4F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BF3A0D22-FB23-452C-93A3-8F97898D6A4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF3A0D22-FB23-452C-93A3-8F97898D6A4F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF3A0D22-FB23-452C-93A3-8F97898D6A4F}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{BF3A0D22-FB23-452C-93A3-8F97898D6A4F}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{BF3A0D22-FB23-452C-93A3-8F97898D6A4F}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

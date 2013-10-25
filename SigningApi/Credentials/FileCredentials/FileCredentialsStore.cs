@@ -4,113 +4,104 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 using System.Web;
-using ClrPlus.Core.Collections;
 using ClrPlus.Scripting.Languages.PropertySheet;
-using ServiceStack.Configuration;
 using ServiceStack.ServiceInterface;
 using ServiceStack.ServiceInterface.Auth;
+using SigningServiceBase;
 
-namespace Outercurve.SigningApi
+namespace Outercurve.FileCredentials
 {
-    
-        public class CustomBasicAuthProvider : BasicAuthProvider
+    public class FileCredentialsStore : BasicAuthProvider, ISimpleCredentialStore
+    {
+        private readonly HttpServerUtilityBase _serverBase;
+        public const int DEFAULT_PASS_LENGTH = 16;
+
+        private readonly object _lock = new object();
+
+        public FileCredentialsStore(HttpServerUtilityBase serverBase)
         {
+            _serverBase = serverBase;
+        }
 
-            public const int DEFAULT_PASS_LENGTH = 16;
-
-            private readonly object _lock = new object();
-            private readonly AppHost _hostBase;
-            private readonly AppSettings _settings;
-            private readonly LoggingService _log;
-            public CustomBasicAuthProvider(AppHost hostBase, AppSettings settings, LoggingService log)
+        public override void OnAuthenticated(IServiceBase authService, IAuthSession session, IOAuthTokens tokens, Dictionary<string, string> authInfo)
+        {
+            lock (_lock)
             {
-                _hostBase = hostBase;
-                _settings = settings;
-                _log = log;
-            }
+                var user = GetUserRule(session.UserAuthName);
 
-            public override bool TryAuthenticate(IServiceBase authService, string userName, string password)
-            {
-                
-                if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password))
+                if (user == null)
                 {
-                    _log.StartAuthenticate(userName, password, false);
+                    return;
+                }
+
+                session.IsAuthenticated = true;
+                //Fill the IAuthSession with data which you want to retrieve in the app eg:
+                session.FirstName = user.HasProperty("firstname") ? user["firstname"].Value : "";
+                session.LastName = user.HasProperty("lastname") ? user["lastname"].Value : "";
+
+                session.Roles = new XList<string>();
+
+                // check to see if user has an unsalted password
+                var storedPassword = user["password"].Value;
+                /*  if (storedPassword.Length != 32)
+                  {
+                      session.Roles.Add("password_must_be_changed");
+                  }*/
+
+                if (user.HasProperty("roles"))
+                {
+                    session.Roles.AddRange(user["roles"].Values);
+                }
+
+                //Important: You need to save the session!
+                authService.SaveSession(session, SessionExpiry);
+            }
+        }
+
+        public override bool TryAuthenticate(IServiceBase service, string userName, string password)
+        {
+           
+            if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password))
+            {
+                _log.StartAuthenticate(userName, password, false);
+                return false;
+            }
+            lock (_lock)
+            {
+                var user = GetUserRule(userName);
+
+                if (user == null)
+                {
                     return false;
                 }
-                lock (_lock)
+
+                var storedPassword = user["password"].Value;
+
+                if (storedPassword.Length == 32)
                 {
-                    var user = GetUserRule(userName);
 
-                    if (user == null)
+                    var pwd = HashPassword(password);
+                    if (pwd == storedPassword)
                     {
-                        return false;
-                    }
-
-                    var storedPassword = user["password"].Value;
-
-                    if (storedPassword.Length == 32)
-                    {
-
-                        var pwd = HashPassword(password);
-                        if (pwd == storedPassword)
-                        {
-                            _log.StartAuthenticate(userName, password, true);
-                            return true;
-                        }
-                    }
-
-                 /*   if (storedPassword == password)
-                    {
-                        // matched against password unsalted.
-                        // user should change password asap.
+                        _log.StartAuthenticate(userName, password, true);
                         return true;
-                    }*/
-                    _log.StartAuthenticate(userName, password, false);
-                    return false;
+                    }
                 }
 
+                /*   if (storedPassword == password)
+                   {
+                       // matched against password unsalted.
+                       // user should change password asap.
+                       return true;
+                   }*/
+                _log.StartAuthenticate(userName, password, false);
+                return false;
             }
+        }
 
-            public override void OnAuthenticated(IServiceBase authService, IAuthSession session, IOAuthTokens tokens, Dictionary<string, string> authInfo)
-            {
-                lock (_lock)
-                {
-                    var user = GetUserRule(session.UserAuthName);
-
-                    if (user == null)
-                    {
-                        return;
-                    }
-
-                    session.IsAuthenticated = true;
-                    //Fill the IAuthSession with data which you want to retrieve in the app eg:
-                    session.FirstName = user.HasProperty("firstname") ? user["firstname"].Value : "";
-                    session.LastName = user.HasProperty("lastname") ? user["lastname"].Value : "";
-
-                    session.Roles = new XList<string>();
-
-                    // check to see if user has an unsalted password
-                    var storedPassword = user["password"].Value;
-                  /*  if (storedPassword.Length != 32)
-                    {
-                        session.Roles.Add("password_must_be_changed");
-                    }*/
-
-                    if (user.HasProperty("roles"))
-                    {
-                        session.Roles.AddRange(user["roles"].Values);
-                    }
-
-                    //Important: You need to save the session!
-                    authService.SaveSession(session, SessionExpiry);
-                }
-            }
-           
-
-           
-
-            private string HashPassword(string password)
+           private string HashPassword(string password)
             {
                 using (var hasher = MD5.Create())
                 {
@@ -377,7 +368,7 @@ namespace Outercurve.SigningApi
                     if (p != null)
                     {
                             
-                        p = HttpContext.Current.Server.MapPath(p);
+                        p = _serverBase.MapPath(p);
                         if (File.Exists(p))
                         {
                             return p;

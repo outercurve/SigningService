@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
-using ClrPlus.Core.Extensions;
 using ServiceStack.Logging;
+using SigningServiceBase;
 
 namespace Outercurve.SigningApi
 {
-    public class LoggingService
+    public class LoggingService : ILoggingService
     {
         private readonly ILog _log;
         private readonly object _lock = new object();
@@ -47,7 +47,7 @@ namespace Outercurve.SigningApi
 
         private static string CreateLocationInfo(string memberName, string sourceFilePath, int sourceLineNumber)
         {
-            return "{0},{1}:{2}".format(memberName, sourceFilePath, sourceLineNumber);
+            return String.Format("{0},{1}:{2}",memberName, sourceFilePath, sourceLineNumber);
         }
 
         public void Debug(object message, [CallerMemberName] string memberName = "",

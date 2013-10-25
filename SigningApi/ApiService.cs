@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO.Abstractions;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using ClrPlus.Core.Extensions;
@@ -10,32 +11,31 @@ using Outercurve.DTO.Services.Azure;
 using Outercurve.SigningApi.Signers;
 using ServiceStack.Configuration;
 using ServiceStack.ServiceInterface;
+using SigningServiceBase;
 
 namespace Outercurve.SigningApi
 {
     public class ApiService : Service
     {
         private readonly IAzureService _azure;
-        private readonly AzureClient _azureClient;
-        private readonly FsService _fs;
-        private readonly CertService _certs;
-        private readonly AppSettings _settings;
-        private readonly CustomBasicAuthProvider _authProvider;
+       
+
+       
         private readonly List<String> Errors = new List<string>();
+        private readonly IAzureClient _azureClient;
+
+        private readonly ISimpleCredentialStore _credentialStore;
         private readonly LoggingService _log;
         private readonly JobScheduler _jobScheduler;
         private readonly SigningJobCreator _jobCreator;
         public const int HOURS_FILE_SHOULD_BE_ACCESSIBLE = 12;
 
-        public ApiService(AzureClient azureClient, FsService fs, CertService certs, AppSettings settings, CustomBasicAuthProvider authProvider, 
+        public ApiService(IAzureClient azureClient, IFileSystem fs, ICertificateService certs, ISimpleCredentialStore credentialStore, 
             LoggingService log, JobScheduler jobScheduler, SigningJobCreator jobCreator)
         {
             _azure = azureClient.GetRoot();
             _azureClient = azureClient;
-            _fs = fs;
-            _certs = certs;
-            _settings = settings;
-            _authProvider = authProvider;
+            _credentialStore = credentialStore;
             _log = log;
             _jobScheduler = jobScheduler;
             _jobCreator = jobCreator;
@@ -102,7 +102,7 @@ namespace Outercurve.SigningApi
             _log.StartLog(request);
             try
             {
-                _authProvider.SetRoles(request.UserName, request.Roles.ToArray());
+                _credentialStore.SetRoles(request.UserName, request.Roles.ToArray());
                 return new BaseResponse();
             }
             catch (Exception e)
@@ -121,7 +121,7 @@ namespace Outercurve.SigningApi
             _log.StartLog(request);
             try
             {
-                var roles = _authProvider.GetRoles(request.UserName);
+                var roles = _credentialStore.GetRoles(request.UserName);
                 return new GetRolesResponse {Roles = roles.ToList()};
             }
             catch (Exception e)
@@ -162,7 +162,7 @@ namespace Outercurve.SigningApi
             try
             {
 
-                var roles = _authProvider.GetRoles(this.GetSession().UserAuthName);
+                var roles = _credentialStore.GetRoles(this.GetSession().UserAuthName);
                 return new GetRolesResponse {Roles = roles.ToList()};
             }
             catch (Exception e)
@@ -178,7 +178,7 @@ namespace Outercurve.SigningApi
             _log.StartLog(request);
             try
             {
-                _authProvider.UnsetRoles(request.UserName, request.Roles.ToArray());
+                _credentialStore.UnsetRoles(request.UserName, request.Roles.ToArray());
                 return new BaseResponse();
             }
             catch (Exception e)
@@ -195,7 +195,7 @@ namespace Outercurve.SigningApi
             _log.StartLog(request);
             try
             {
-                var pass = _authProvider.ResetPasswordAsAdmin(request.UserName);
+                var pass = _credentialStore.ResetPasswordAsAdmin(request.UserName);
                 return new CreateUserResponse {Password = pass};
             }
             catch (Exception e)
@@ -211,7 +211,7 @@ namespace Outercurve.SigningApi
             _log.StartLog(request);
             try
             {
-                _authProvider.RemoveUser(request.UserName);
+                _credentialStore.RemoveUser(request.UserName);
                 return new BaseResponse();
             }
             catch (Exception e)
@@ -227,7 +227,7 @@ namespace Outercurve.SigningApi
             _log.StartLog(request);
             try
             {
-                _authProvider.SetPassword(this.GetSession().UserAuthName, request.NewPassword);
+                _credentialStore.SetPassword(this.GetSession().UserAuthName, request.NewPassword);
                 return new BaseResponse();
             }
             catch (Exception e)
@@ -245,7 +245,7 @@ namespace Outercurve.SigningApi
             {
                 if (String.IsNullOrWhiteSpace(request.Password))
                 {
-                    var password = _authProvider.CreateUser(request.Username);
+                    var password = _credentialStore.CreateUser(request.Username);
                     if (password != null)
                     {
                         return new CreateUserResponse {Password = password};
@@ -256,7 +256,7 @@ namespace Outercurve.SigningApi
                 }
                 else
                 {
-                   if (_authProvider.CreateUserWithPassword(request.Username, request.Password))
+                   if (_credentialStore.CreateUserWithPassword(request.Username, request.Password))
                    {
                        return new CreateUserResponse();
                    }
@@ -278,7 +278,7 @@ namespace Outercurve.SigningApi
             _log.StartLog(request);
             try
             {
-                _authProvider.Initialize(request.UserName, request.Password);
+                _credentialStore.Initialize(request.UserName, request.Password);
                 return new BaseResponse();
             }
             catch (Exception e)
